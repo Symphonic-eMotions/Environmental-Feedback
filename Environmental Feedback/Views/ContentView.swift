@@ -10,7 +10,10 @@ import AudioKit
 import AudioKitUI
 
 struct ContentView: View {
-    @StateObject private var audioManager = AudioManager()
+    @StateObject private var audioManager = AudioManager(
+        micVolume: 0.2,
+        playbackVolume: 0.2
+    )
     @State private var micVolume: Float = 0.2
     @State private var playbackVolume: Float = 0.2
     @State private var isEngineRunning = false
@@ -27,7 +30,7 @@ struct ContentView: View {
                     }
                     isEngineRunning.toggle()
                 }) {
-                    Text(isEngineRunning ? "Stop Engine" : "Start Engine")
+                    Text(isEngineRunning ? "Stop" : "Activate")
                         .font(.title)
                         .padding()
                         .background(Color.green)
@@ -39,9 +42,9 @@ struct ContentView: View {
                     Button(action: {
                         if isRecording {
                             audioManager.stopRecording()
-                            audioManager.setPlaybackVolume(playbackVolume) // Restore playback volume
+                            audioManager.setPlaybackVolume(playbackVolume)
                         } else {
-                            audioManager.setPlaybackVolume(0) // Mute playback during recording
+                            audioManager.setPlaybackVolume(0)
                             audioManager.startRecording()
                         }
                         isRecording.toggle()
@@ -86,8 +89,7 @@ struct ContentView: View {
             }
         }
         .onAppear {
-            audioManager.setupAudio(micVolume: micVolume, playbackVolume: playbackVolume)
-            isEngineRunning = true
+            audioManager.startEngine()
         }
         .onDisappear {
             audioManager.cleanup()
