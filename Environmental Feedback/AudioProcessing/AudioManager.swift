@@ -46,8 +46,15 @@ class AudioManager: ObservableObject {
         } catch {
             print("Error setting up NodeRecorder: \(error)")
         }
+        
+        // Start the engine
+        do {
+            try engine.start()
+        } catch {
+            print("Error starting AudioEngine: \(error)")
+        }
     }
-    
+
     func startEngine() {
         do {
             try engine.start()

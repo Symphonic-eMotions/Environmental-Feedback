@@ -87,6 +87,7 @@ struct ContentView: View {
         }
         .onAppear {
             audioManager.setupAudio(micVolume: micVolume, playbackVolume: playbackVolume)
+            isEngineRunning = true
         }
         .onDisappear {
             audioManager.cleanup()
