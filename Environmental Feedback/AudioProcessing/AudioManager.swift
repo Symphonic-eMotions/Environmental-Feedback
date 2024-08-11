@@ -18,7 +18,10 @@ class AudioManager: ObservableObject {
     private var micMixer = Mixer()
     private var playbackMixer = Mixer()
     
-    func setupAudio(micVolume: Float, playbackVolume: Float) {
+    private var micAmplitudeTap: AmplitudeTap!
+    private var playbackAmplitudeTap: AmplitudeTap!
+
+    func setupAudio(micVolume: Float, playbackVolume: Float, micAmplitude: Binding<Float>, playbackAmplitude: Binding<Float>) {
         guard let mic = engine.input else {
             print("Microphone input is not available.")
             return
@@ -51,6 +54,21 @@ class AudioManager: ObservableObject {
             print("Error setting up NodeRecorder: \(error)")
         }
 
+        // Set up amplitude taps for VU meters
+        micAmplitudeTap = AmplitudeTap(micMixer) { amp in
+            DispatchQueue.main.async {
+                micAmplitude.wrappedValue = amp
+            }
+        }
+        playbackAmplitudeTap = AmplitudeTap(playbackMixer) { amp in
+            DispatchQueue.main.async {
+                playbackAmplitude.wrappedValue = amp
+            }
+        }
+        
+        micAmplitudeTap.start()
+        playbackAmplitudeTap.start()
+
         // Start the AudioEngine
         do {
             try engine.start()
@@ -76,7 +94,6 @@ class AudioManager: ObservableObject {
                 try recordedFile.read(into: buffer!)
                 
                 if let buffer = buffer {
-                    // Plan het afspelen van de buffer
                     player.scheduleBuffer(buffer, at: nil, options: .loops)
                     player.play()
                 }
@@ -95,6 +112,8 @@ class AudioManager: ObservableObject {
     }
     
     func cleanup() {
+        micAmplitudeTap.stop()
+        playbackAmplitudeTap.stop()
         engine.stop()
     }
 }

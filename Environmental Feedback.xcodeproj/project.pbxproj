@@ -14,6 +14,7 @@
 		7C205A5F2C5F653400646C10 /* AudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7C205A5E2C5F653400646C10 /* AudioKit */; };
 		7C4FEBBE2C64C382000E2865 /* AudioKitUI in Frameworks */ = {isa = PBXBuildFile; productRef = 7C4FEBBD2C64C382000E2865 /* AudioKitUI */; };
 		7CD1CB702C688E0000887861 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD1CB6F2C688E0000887861 /* AudioManager.swift */; };
+		7CD1CB732C6896C900887861 /* VUMeterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD1CB722C6896C900887861 /* VUMeterView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		7C205A512C5F626700646C10 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7C205A542C5F626700646C10 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		7CD1CB6F2C688E0000887861 /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
+		7CD1CB722C6896C900887861 /* VUMeterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VUMeterView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,7 +60,7 @@
 			isa = PBXGroup;
 			children = (
 				7C205A4D2C5F626500646C10 /* Environmental_FeedbackApp.swift */,
-				7C205A4F2C5F626500646C10 /* ContentView.swift */,
+				7CD1CB712C6896B500887861 /* Views */,
 				7C205A602C5F668400646C10 /* AudioProcessing */,
 				7C205A512C5F626700646C10 /* Assets.xcassets */,
 				7C205A532C5F626700646C10 /* Preview Content */,
@@ -80,6 +82,15 @@
 				7CD1CB6F2C688E0000887861 /* AudioManager.swift */,
 			);
 			path = AudioProcessing;
+			sourceTree = "<group>";
+		};
+		7CD1CB712C6896B500887861 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				7C205A4F2C5F626500646C10 /* ContentView.swift */,
+				7CD1CB722C6896C900887861 /* VUMeterView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -163,6 +174,7 @@
 				7C205A502C5F626500646C10 /* ContentView.swift in Sources */,
 				7C205A4E2C5F626500646C10 /* Environmental_FeedbackApp.swift in Sources */,
 				7CD1CB702C688E0000887861 /* AudioManager.swift in Sources */,
+				7CD1CB732C6896C900887861 /* VUMeterView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

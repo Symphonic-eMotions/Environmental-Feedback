@@ -13,6 +13,8 @@ struct ContentView: View {
     @State private var isRecording = false
     @State private var micVolume: Float = 0.2
     @State private var playbackVolume: Float = 0.2
+    @State private var micAmplitude: Float = 0.0
+    @State private var playbackAmplitude: Float = 0.0
 
     var body: some View {
         VStack {
@@ -44,8 +46,10 @@ struct ContentView: View {
                     .onChange(of: micVolume) {
                         audioManager.setMicVolume(micVolume)
                     }
+                VUMeterView(amplitude: $micAmplitude)
+                    .frame(height: 150)
+                    .padding()
             }
-            .padding()
 
             VStack {
                 Text("Playback Volume")
@@ -54,11 +58,13 @@ struct ContentView: View {
                     .onChange(of: playbackVolume) {
                         audioManager.setPlaybackVolume(playbackVolume)
                     }
+                VUMeterView(amplitude: $playbackAmplitude)
+                    .frame(height: 150)
+                    .padding()
             }
-            .padding()
         }
         .onAppear {
-            audioManager.setupAudio(micVolume: micVolume, playbackVolume: playbackVolume)
+            audioManager.setupAudio(micVolume: micVolume, playbackVolume: playbackVolume, micAmplitude: $micAmplitude, playbackAmplitude: $playbackAmplitude)
         }
         .onDisappear {
             audioManager.cleanup()
