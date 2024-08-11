@@ -6,16 +6,45 @@
 //
 
 import SwiftUI
+import AudioKit
+import AudioKitUI
+import AVFoundation
+
+import SwiftUI
+import AudioKit
 
 struct ContentView: View {
+    @StateObject private var audioManager = AudioManager()
+    @State private var isRecording = false
+
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            Text(isRecording ? "Recording..." : "Tap to Record/Play")
+                .font(.headline)
+                .padding()
+
+            Button(action: {
+                if isRecording {
+                    audioManager.stopRecording()
+                } else {
+                    audioManager.startRecording()
+                }
+                isRecording.toggle()
+            }) {
+                Text(isRecording ? "Stop & Loop" : "Record & Loop")
+                    .font(.title)
+                    .padding()
+                    .background(Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+            }
         }
-        .padding()
+        .onAppear {
+            audioManager.setupAudio()
+        }
+        .onDisappear {
+            audioManager.cleanup()
+        }
     }
 }
 
