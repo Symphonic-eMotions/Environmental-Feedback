@@ -7,7 +7,7 @@
 
 import SwiftUI
 import AudioKit
-import AVFAudio
+import AVFoundation
 
 class AudioManager: ObservableObject {
     private var engine = AudioEngine()
@@ -15,8 +15,10 @@ class AudioManager: ObservableObject {
     private var player = AudioPlayer()
     private var mic: AudioEngine.InputNode?
     private var recorder: NodeRecorder?
+    private var micMixer = Mixer()
+    private var playbackMixer = Mixer()
     
-    func setupAudio() {
+    func setupAudio(micVolume: Float, playbackVolume: Float) {
         guard let mic = engine.input else {
             print("Microphone input is not available.")
             return
@@ -24,16 +26,20 @@ class AudioManager: ObservableObject {
         
         self.mic = mic
 
-        // Initialize the mixer and player
-        mixer = Mixer()
-        player = AudioPlayer()
+        // Set up the mic and playback mixers
+        micMixer.volume = AUValue(micVolume)
+        playbackMixer.volume = AUValue(playbackVolume)
+
+        // Connect the microphone to the mic mixer
+        micMixer.addInput(mic)
         
-        // Connect the microphone to the mixer
-        mixer.addInput(mic)
-        
-        // Connect the player to the mixer
+        // Connect the player to the playback mixer
         player.isLooping = true
-        mixer.addInput(player)
+        playbackMixer.addInput(player)
+        
+        // Connect both mixers to the main mixer
+        mixer.addInput(micMixer)
+        mixer.addInput(playbackMixer)
         
         // Set the mixer as the output of the engine
         engine.output = mixer
@@ -78,6 +84,14 @@ class AudioManager: ObservableObject {
                 print("Error scheduling buffer for playback: \(error)")
             }
         }
+    }
+    
+    func setMicVolume(_ volume: Float) {
+        micMixer.volume = AUValue(volume)
+    }
+    
+    func setPlaybackVolume(_ volume: Float) {
+        playbackMixer.volume = AUValue(volume)
     }
     
     func cleanup() {

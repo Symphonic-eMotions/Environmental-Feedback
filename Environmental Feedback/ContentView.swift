@@ -7,15 +7,12 @@
 
 import SwiftUI
 import AudioKit
-import AudioKitUI
-import AVFoundation
-
-import SwiftUI
-import AudioKit
 
 struct ContentView: View {
     @StateObject private var audioManager = AudioManager()
     @State private var isRecording = false
+    @State private var micVolume: Float = 0.2
+    @State private var playbackVolume: Float = 0.2
 
     var body: some View {
         VStack {
@@ -38,9 +35,30 @@ struct ContentView: View {
                     .foregroundColor(.white)
                     .cornerRadius(10)
             }
+            .padding()
+
+            VStack {
+                Text("Mic Volume")
+                Slider(value: $micVolume, in: 0...1, step: 0.01)
+                    .padding()
+                    .onChange(of: micVolume) {
+                        audioManager.setMicVolume(micVolume)
+                    }
+            }
+            .padding()
+
+            VStack {
+                Text("Playback Volume")
+                Slider(value: $playbackVolume, in: 0...1, step: 0.01)
+                    .padding()
+                    .onChange(of: playbackVolume) {
+                        audioManager.setPlaybackVolume(playbackVolume)
+                    }
+            }
+            .padding()
         }
         .onAppear {
-            audioManager.setupAudio()
+            audioManager.setupAudio(micVolume: micVolume, playbackVolume: playbackVolume)
         }
         .onDisappear {
             audioManager.cleanup()
