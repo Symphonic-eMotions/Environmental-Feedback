@@ -11,17 +11,13 @@ import AVFoundation
 
 class AudioManager: ObservableObject {
     private var engine = AudioEngine()
-    private var mixer = Mixer()
+    private(set) var micMixer = Mixer() // Expose these for the NodeOutputView
+    private(set) var playbackMixer = Mixer()
     private var player = AudioPlayer()
     private var mic: AudioEngine.InputNode?
     private var recorder: NodeRecorder?
-    private var micMixer = Mixer()
-    private var playbackMixer = Mixer()
-    
-    private var micAmplitudeTap: AmplitudeTap!
-    private var playbackAmplitudeTap: AmplitudeTap!
 
-    func setupAudio(micVolume: Float, playbackVolume: Float, micAmplitude: Binding<Float>, playbackAmplitude: Binding<Float>) {
+    func setupAudio(micVolume: Float, playbackVolume: Float) {
         guard let mic = engine.input else {
             print("Microphone input is not available.")
             return
@@ -41,42 +37,32 @@ class AudioManager: ObservableObject {
         playbackMixer.addInput(player)
         
         // Connect both mixers to the main mixer
-        mixer.addInput(micMixer)
-        mixer.addInput(playbackMixer)
-        
-        // Set the mixer as the output of the engine
-        engine.output = mixer
-        
+        let mainMixer = Mixer(micMixer, playbackMixer)
+        engine.output = mainMixer
+
         // Setup the recorder
         do {
             recorder = try NodeRecorder(node: mic)
         } catch {
             print("Error setting up NodeRecorder: \(error)")
         }
-
-        // Set up amplitude taps for VU meters
-        micAmplitudeTap = AmplitudeTap(micMixer) { amp in
-            DispatchQueue.main.async {
-                micAmplitude.wrappedValue = amp
-            }
-        }
-        playbackAmplitudeTap = AmplitudeTap(playbackMixer) { amp in
-            DispatchQueue.main.async {
-                playbackAmplitude.wrappedValue = amp
-            }
-        }
-        
-        micAmplitudeTap.start()
-        playbackAmplitudeTap.start()
-
-        // Start the AudioEngine
+    }
+    
+    func startEngine() {
         do {
             try engine.start()
+
+            // No need for additional taps, NodeOutputView should now work directly
         } catch {
             print("Error starting AudioEngine: \(error)")
         }
     }
     
+    func stopEngine() {
+        engine.stop()
+        player.stop()
+    }
+
     func startRecording() {
         do {
             try recorder?.record()
@@ -112,8 +98,6 @@ class AudioManager: ObservableObject {
     }
     
     func cleanup() {
-        micAmplitudeTap.stop()
-        playbackAmplitudeTap.stop()
         engine.stop()
     }
 }

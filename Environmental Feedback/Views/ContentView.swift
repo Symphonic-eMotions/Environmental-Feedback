@@ -7,35 +7,53 @@
 
 import SwiftUI
 import AudioKit
+import AudioKitUI
 
 struct ContentView: View {
     @StateObject private var audioManager = AudioManager()
-    @State private var isRecording = false
     @State private var micVolume: Float = 0.2
     @State private var playbackVolume: Float = 0.2
-    @State private var micAmplitude: Float = 0.0
-    @State private var playbackAmplitude: Float = 0.0
+    @State private var isEngineRunning = false
+    @State private var isRecording = false
 
     var body: some View {
         VStack {
-            Text(isRecording ? "Recording..." : "Tap to Record/Play")
-                .font(.headline)
-                .padding()
-
-            Button(action: {
-                if isRecording {
-                    audioManager.stopRecording()
-                } else {
-                    audioManager.startRecording()
+            HStack {
+                Button(action: {
+                    if isEngineRunning {
+                        audioManager.stopEngine()
+                    } else {
+                        audioManager.startEngine()
+                    }
+                    isEngineRunning.toggle()
+                }) {
+                    Text(isEngineRunning ? "Stop Engine" : "Start Engine")
+                        .font(.title)
+                        .padding()
+                        .background(Color.green)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
                 }
-                isRecording.toggle()
-            }) {
-                Text(isRecording ? "Stop & Loop" : "Record & Loop")
-                    .font(.title)
-                    .padding()
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
+
+                if isEngineRunning {
+                    Button(action: {
+                        if isRecording {
+                            audioManager.stopRecording()
+                            audioManager.setPlaybackVolume(playbackVolume) // Restore playback volume
+                        } else {
+                            audioManager.setPlaybackVolume(0) // Mute playback during recording
+                            audioManager.startRecording()
+                        }
+                        isRecording.toggle()
+                    }) {
+                        Text(isRecording ? "Stop Recording" : "Record")
+                            .font(.title)
+                            .padding()
+                            .background(Color.red)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                    }
+                }
             }
             .padding()
 
@@ -46,7 +64,8 @@ struct ContentView: View {
                     .onChange(of: micVolume) {
                         audioManager.setMicVolume(micVolume)
                     }
-                VUMeterView(amplitude: $micAmplitude)
+
+                NodeOutputView(audioManager.micMixer, color: .blue)
                     .frame(height: 150)
                     .padding()
             }
@@ -56,15 +75,18 @@ struct ContentView: View {
                 Slider(value: $playbackVolume, in: 0...1, step: 0.01)
                     .padding()
                     .onChange(of: playbackVolume) {
-                        audioManager.setPlaybackVolume(playbackVolume)
+                        if !isRecording {
+                            audioManager.setPlaybackVolume(playbackVolume)
+                        }
                     }
-                VUMeterView(amplitude: $playbackAmplitude)
+
+                NodeOutputView(audioManager.playbackMixer, color: .green)
                     .frame(height: 150)
                     .padding()
             }
         }
         .onAppear {
-            audioManager.setupAudio(micVolume: micVolume, playbackVolume: playbackVolume, micAmplitude: $micAmplitude, playbackAmplitude: $playbackAmplitude)
+            audioManager.setupAudio(micVolume: micVolume, playbackVolume: playbackVolume)
         }
         .onDisappear {
             audioManager.cleanup()
