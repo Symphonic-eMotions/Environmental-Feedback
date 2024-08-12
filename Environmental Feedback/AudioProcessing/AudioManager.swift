@@ -17,6 +17,8 @@ class AudioManager: ObservableObject {
     private var player = AudioPlayer()
     private var mic: AudioEngine.InputNode?
     private var recorder: NodeRecorder?
+    private var fftTap: FFTTap!
+    @Published var fftData = FFTData()
 
     init(micVolume: Float, playbackVolume: Float) {
         setupAudio(micVolume: micVolume, playbackVolume: playbackVolume)
@@ -40,6 +42,11 @@ class AudioManager: ObservableObject {
         let mainMixer = Mixer(micMixer, playbackMixer)
         engine.output = mainMixer
 
+        // Setup FFT Tap
+        fftTap = FFTTap(micMixer) { fftData in
+            self.fftData.update(with: fftData)
+        }
+
         do {
             recorder = try NodeRecorder(node: mic)
         } catch {
@@ -48,6 +55,7 @@ class AudioManager: ObservableObject {
 
         do {
             try engine.start()
+            fftTap.start()
         } catch {
             print("Error starting AudioEngine: \(error)")
         }
@@ -56,6 +64,7 @@ class AudioManager: ObservableObject {
     func startEngine() {
         do {
             try engine.start()
+            fftTap.start()
         } catch {
             print("Error starting AudioEngine: \(error)")
         }
@@ -64,6 +73,7 @@ class AudioManager: ObservableObject {
     func stopEngine() {
         engine.stop()
         player.stop()
+        fftTap.stop()
     }
 
     func startRecording() {
@@ -100,7 +110,21 @@ class AudioManager: ObservableObject {
         playbackMixer.volume = AUValue(volume)
     }
 
+    func setLoopLength(_ length: Double) {
+        // Implement logic to adjust loop length
+    }
+
+    func startLoopTracking(onUpdate: @escaping (Double) -> Void) {
+        // Implement logic to track current loop position
+    }
+
+    func stopLoopTracking() {
+        // Implement logic to stop loop tracking
+    }
+
     func cleanup() {
         engine.stop()
+        fftTap.stop()
+        stopLoopTracking()
     }
 }
