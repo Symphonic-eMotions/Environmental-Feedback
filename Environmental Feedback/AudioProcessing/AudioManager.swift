@@ -76,9 +76,16 @@ class AudioManager: ObservableObject {
         fftTap.stop()
     }
 
-    func startRecording() {
+    func startRecording(onComplete: @escaping () -> Void) {
         do {
             try recorder?.record()
+            print("Recording started")
+            
+            // Schedule the stop of recording after the buffer duration (default is 5 seconds)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) { [weak self] in
+                self?.stopRecording()
+                onComplete()
+            }
         } catch {
             print("Error starting recording: \(error)")
         }
@@ -95,6 +102,7 @@ class AudioManager: ObservableObject {
                 if let buffer = buffer {
                     player.scheduleBuffer(buffer, at: nil, options: .loops)
                     player.play()
+                    print("Playback started")
                 }
             } catch {
                 print("Error scheduling buffer for playback: \(error)")
@@ -111,11 +119,35 @@ class AudioManager: ObservableObject {
     }
 
     func setLoopLength(_ length: Double) {
-        // Implement logic to adjust loop length
+        if let recordedFile = recorder?.audioFile {
+            let sampleRate = recordedFile.processingFormat.sampleRate
+            let frameCount = AVAudioFrameCount(length * sampleRate)
+            
+            guard let buffer = AVAudioPCMBuffer(pcmFormat: recordedFile.processingFormat, frameCapacity: frameCount) else {
+                print("Failed to create AVAudioPCMBuffer")
+                return
+            }
+            
+            do {
+                try recordedFile.read(into: buffer)
+                player.scheduleBuffer(buffer, at: nil, options: .loops)
+                player.play()
+            } catch {
+                print("Error reading into buffer or scheduling playback: \(error)")
+            }
+        }
     }
 
     func startLoopTracking(onUpdate: @escaping (Double) -> Void) {
-        // Implement logic to track current loop position
+        Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
+            Task { @MainActor in
+                let currentTime = self.player.currentTime
+                if let buffer = self.player.buffer {
+                    let bufferDuration = Double(buffer.frameLength) / buffer.format.sampleRate
+                    onUpdate(currentTime.truncatingRemainder(dividingBy: bufferDuration))
+                }
+            }
+        }
     }
 
     func stopLoopTracking() {

@@ -47,11 +47,15 @@ struct ContentView: View {
                             if isRecording {
                                 audioManager.stopRecording()
                                 audioManager.setPlaybackVolume(playbackVolume)
+                                isRecording = false
                             } else {
                                 audioManager.setPlaybackVolume(0)
-                                audioManager.startRecording()
+                                isRecording = true
+                                audioManager.startRecording {
+                                    isRecording = false
+                                    audioManager.setPlaybackVolume(playbackVolume)
+                                }
                             }
-                            isRecording.toggle()
                         }) {
                             Text(isRecording ? "Stop Recording" : "Record")
                                 .font(.title2)
