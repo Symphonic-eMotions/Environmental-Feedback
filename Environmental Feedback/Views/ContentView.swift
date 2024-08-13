@@ -11,11 +11,11 @@ import AudioKitUI
 
 struct ContentView: View {
     @StateObject private var audioManager = AudioManager(
-        micVolume: 0.2,
-        playbackVolume: 0.2
+        micVolume: 1.0,
+        playbackVolume: 1.0
     )
-    @State private var micVolume: Float = 0.2
-    @State private var playbackVolume: Float = 0.2
+    @State private var micVolume: Float = 1.0
+    @State private var playbackVolume: Float = 1.0
     @State private var loopLength: Double = 5.0 // Default loop length in seconds
     @State private var isEngineRunning = false
     @State private var isRecording = false

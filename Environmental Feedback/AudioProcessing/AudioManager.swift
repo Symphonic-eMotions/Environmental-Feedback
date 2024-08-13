@@ -25,6 +25,17 @@ class AudioManager: ObservableObject {
     }
 
     private func setupAudio(micVolume: Float, playbackVolume: Float) {
+        
+        // Configure AVAudioSession for playback
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker])
+            try AVAudioSession.sharedInstance().overrideOutputAudioPort(.speaker)
+            try AVAudioSession.sharedInstance().setActive(true)
+        } catch {
+            print("Failed to set audio session category.")
+        }
+
+        
         guard let mic = engine.input else {
             print("Microphone input is not available.")
             return
