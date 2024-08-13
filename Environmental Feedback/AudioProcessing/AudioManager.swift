@@ -120,7 +120,19 @@ class AudioManager: ObservableObject {
             }
         }
     }
+    
+    func startPlayback() {
+        player.play()
+    }
 
+    func stopPlayback() {
+        player.stop()
+    }
+
+    func setMicMuted(_ muted: Bool) {
+        micMixer.volume = muted ? 0 : 1.0
+    }
+    
     func setMicVolume(_ volume: Float) {
         micMixer.volume = AUValue(volume)
     }

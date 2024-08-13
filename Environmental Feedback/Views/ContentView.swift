@@ -19,6 +19,7 @@ struct ContentView: View {
     @State private var loopLength: Double = 5.0 // Default loop length in seconds
     @State private var isEngineRunning = false
     @State private var isRecording = false
+    @State private var isPlaying = false
     @State private var currentPosition: Double = 0.0
 
     var body: some View {
@@ -33,39 +34,53 @@ struct ContentView: View {
                         }
                         isEngineRunning.toggle()
                     }) {
-                        Text(isEngineRunning ? "Stop" : "Activate")
-                            .font(.title2)
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .background(Color.green)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
+                        Image(systemName: isEngineRunning ? "power.circle.fill" : "power.circle")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 50, height: 50)
+                        .foregroundColor(isEngineRunning ? .green : .gray)
                     }
 
-                    if isEngineRunning {
-                        Button(action: {
-                            if isRecording {
-                                audioManager.stopRecording()
-                                audioManager.setPlaybackVolume(playbackVolume)
+                    Button(action: {
+                        if isRecording {
+                            audioManager.stopRecording()
+                            audioManager.setPlaybackVolume(playbackVolume)
+                            isRecording = false
+                        } else {
+                            audioManager.setPlaybackVolume(0)
+                            isRecording = true
+                            audioManager.startRecording {
                                 isRecording = false
-                            } else {
-                                audioManager.setPlaybackVolume(0)
-                                isRecording = true
-                                audioManager.startRecording {
-                                    isRecording = false
-                                    audioManager.setPlaybackVolume(playbackVolume)
-                                }
+                                audioManager.setPlaybackVolume(playbackVolume)
                             }
-                        }) {
-                            Text(isRecording ? "Stop Recording" : "Record")
-                                .font(.title2)
-                                .padding()
-                                .frame(maxWidth: .infinity)
-                                .background(Color.red)
-                                .foregroundColor(.white)
-                                .cornerRadius(10)
                         }
+                    }) {
+                        Image(systemName: "circle.fill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 50, height: 50)
+                            .foregroundColor(isRecording ? .red : (isEngineRunning ? .gray : .black))
                     }
+                    .disabled(!isEngineRunning)
+                    
+                    Button(action: {
+                       if isPlaying {
+                           audioManager.stopPlayback()
+                           audioManager.setMicMuted(false)
+                       } else {
+                           audioManager.startPlayback()
+                           audioManager.setMicMuted(true)
+                       }
+                       isPlaying.toggle()
+                   }) {
+                       Image(systemName: "play.fill")
+                           .resizable()
+                           .aspectRatio(contentMode: .fit)
+                           .frame(width: 50, height: 50)
+                           .foregroundColor(isPlaying ? .green : (isEngineRunning ? .gray : .black))
+                   }
+                   .disabled(!isEngineRunning)
+                    
                 }
                 .padding(.horizontal)
 
