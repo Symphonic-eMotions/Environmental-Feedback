@@ -12,7 +12,7 @@ import AudioKitUI
 struct ContentView: View {
 
     @StateObject private var audioManager = AudioManager(
-        micVolume: 0.0,
+        micVolume: 0.01,
         playbackVolume: 1.0
     )
     @State private var isEngineRunning = false

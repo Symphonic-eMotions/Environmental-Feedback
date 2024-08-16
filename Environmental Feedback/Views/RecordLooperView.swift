@@ -17,7 +17,7 @@ struct RecordLooperView: View {
 
         GroupBox {
             ZStack(alignment: .bottom) {
-                NodeOutputView(audioManager.micMixer, color: .red)
+                NodeOutputView(audioManager.micMixerA, color: .red)
                     .frame(height: 120)
 
                 Text("Microphone")
