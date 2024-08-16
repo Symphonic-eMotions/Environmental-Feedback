@@ -54,6 +54,8 @@ struct TransportView: View {
             Button(action: {
                 if audioManager.isPlaying {
                     audioManager.stopPlayback()
+                    audioManager.isPlaying = false
+                    isEngineRunning = false
                 } else {
                     audioManager.setMicMuted(true)
                     audioManager.startPlayback()

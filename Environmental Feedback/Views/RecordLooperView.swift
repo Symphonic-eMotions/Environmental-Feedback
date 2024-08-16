@@ -26,11 +26,11 @@ struct RecordLooperView: View {
                     .opacity(0.3)
                     .offset(y: -65)
 
-                Slider(value: $audioManager.micVolume, in: 0...1, step: 0.01)
-                    .onChange(of: audioManager.micVolume) { newValue in
-                        audioManager.setMicVolume(newValue)
-                    }
-                    .offset(y: 32)
+//                Slider(value: $audioManager.micVolume, in: 0...1, step: 0.01)
+//                    .onChange(of: audioManager.micVolume) { newValue in
+//                        audioManager.setMicVolume(newValue)
+//                    }
+//                    .offset(y: 32)
             }
             .padding(.top, 5)
             .padding(.bottom, 20)

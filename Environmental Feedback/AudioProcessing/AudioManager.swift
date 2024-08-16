@@ -178,8 +178,10 @@ class AudioManager: ObservableObject {
     func stopPlayback() {
         EventScheduler.shared.scheduleEvent(after: 0.01) {
             self.player.stop()
+            self.player.reset()
             self.isPlaying = false
-            print("Playback stopped")
+            self.stopEngine()
+            print("Playback abd engine stopped")
         }
     }
 
@@ -187,22 +189,6 @@ class AudioManager: ObservableObject {
 
         self.micMixerB.volume = muted ? 0 : 1.0
         print("Mic is \(muted ? "muted" : "unmuted")")
-        
-        // Controleer of de sessie correct is ingesteld en actief is
-//        if muted {
-//            do {
-//                try AVAudioSession.sharedInstance().setCategory(.playback, options: [.duckOthers])
-//            } catch {
-//                print("Failed to mute microphone: \(error.localizedDescription)")
-//            }
-//        } else {
-//            do {
-//                try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker])
-//                try AVAudioSession.sharedInstance().setActive(true)
-//            } catch {
-//                print("Failed to unmute microphone: \(error.localizedDescription)")
-//            }
-//        }
     }
     
     func setLoopLength(_ length: Double) {

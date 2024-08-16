@@ -17,7 +17,10 @@ struct ContentView: View {
     )
     @State private var isEngineRunning = false
     @State private var currentPosition: Double = 0.0
-
+    
+    @State private var effectValues: [Float] = [0.5, 0.5, 0.5]
+    let effectLabels = ["Feedback", "Reverb", "Delay"]
+    
     var body: some View {
         VStack(spacing: 20) {
             
@@ -31,6 +34,11 @@ struct ContentView: View {
                 RecordLooperView(audioManager: audioManager)
                 
                 BufferView(audioManager: audioManager)
+                
+                MultiSliderView(values: $effectValues, labels: effectLabels)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .background(Color.gray.opacity(0.1))
+                    .padding()
             }
         }
         .padding(.vertical)

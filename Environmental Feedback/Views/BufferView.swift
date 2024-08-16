@@ -22,19 +22,6 @@ struct BufferView: View {
                     .foregroundColor(.white)
                     .opacity(0.3)
             }
-
-            GroupBox {
-                VStack(spacing: 5) {
-                    Slider(value: $audioManager.loopLength, in: 0.01...2, step: 0.01)
-                        .onChange(of: audioManager.loopLength) { newValue in
-                            audioManager.setLoopLength(newValue)
-                        }
-                    Text("Buffer Length: \(audioManager.loopLength, specifier: "%.2f") seconds")
-
-                    Text("Current Position: \(audioManager.isPlaying ? "Playing" : "Stopped")")
-                }
-                .padding()
-            }
         }
     }
 }
