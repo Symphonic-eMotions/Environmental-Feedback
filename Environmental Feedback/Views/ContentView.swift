@@ -10,149 +10,30 @@ import AudioKit
 import AudioKitUI
 
 struct ContentView: View {
+
     @StateObject private var audioManager = AudioManager(
-        micVolume: 1.0,
+        micVolume: 0.0,
         playbackVolume: 1.0
     )
-    @State private var micVolume: Float = 1.0
-    @State private var playbackVolume: Float = 1.0
-    @State private var loopLength: Double = 5.0 // Default loop length in seconds
     @State private var isEngineRunning = false
-    @State private var isRecording = false
-    @State private var isPlaying = false
     @State private var currentPosition: Double = 0.0
 
     var body: some View {
-        ScrollView {
-            VStack(spacing: 20) {
-                HStack(spacing: 20) {
-                    Button(action: {
-                        if isEngineRunning {
-                            audioManager.stopEngine()
-                        } else {
-                            audioManager.startEngine()
-                        }
-                        isEngineRunning.toggle()
-                    }) {
-                        Image(systemName: isEngineRunning ? "power.circle.fill" : "power.circle")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 50, height: 50)
-                        .foregroundColor(isEngineRunning ? .green : .gray)
-                    }
-
-                    Button(action: {
-                        if isRecording {
-                            audioManager.stopRecording()
-                            audioManager.setPlaybackVolume(playbackVolume)
-                            isRecording = false
-                        } else {
-                            audioManager.setPlaybackVolume(0)
-                            isRecording = true
-                            audioManager.startRecording {
-                                isRecording = false
-                                audioManager.setPlaybackVolume(playbackVolume)
-                            }
-                        }
-                    }) {
-                        Image(systemName: "circle.fill")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 50, height: 50)
-                            .foregroundColor(isRecording ? .red : (isEngineRunning ? .gray : .black))
-                    }
-                    .disabled(!isEngineRunning)
-                    
-                    Button(action: {
-                       if isPlaying {
-                           audioManager.stopPlayback()
-                           audioManager.setMicMuted(false)
-                       } else {
-                           audioManager.startPlayback()
-                           audioManager.setMicMuted(true)
-                       }
-                       isPlaying.toggle()
-                   }) {
-                       Image(systemName: "play.fill")
-                           .resizable()
-                           .aspectRatio(contentMode: .fit)
-                           .frame(width: 50, height: 50)
-                           .foregroundColor(isPlaying ? .green : (isEngineRunning ? .gray : .black))
-                   }
-                   .disabled(!isEngineRunning)
-                    
-                }
-                .padding(.horizontal)
-
-                GroupBox {
-                    ZStack(alignment: .bottom) {
-                        NodeOutputView(audioManager.micMixer, color: .red)
-                            .frame(height: 120)
-                        
-                        Text("Microphone")
-                            .font(.system(size: 40, weight: .bold))
-                            .foregroundColor(.white)
-                            .opacity(0.3)
-                            .offset(y: -65)
-
-                        Slider(value: $micVolume, in: 0...1, step: 0.01)
-                            .onChange(of: micVolume) {
-                                audioManager.setMicVolume(micVolume)
-                            }
-                            .offset(y: 32)
-                    }
-                    .padding(.top, 5)
-                    .padding(.bottom, 20)
-                }
-
-                GroupBox {
-                    ZStack(alignment: .bottom) {
-                        NodeOutputView(audioManager.playbackMixer, color: .green)
-                            .frame(height: 120)
-                        
-                        Text("Playback")
-                            .font(.system(size: 40, weight: .bold))
-                            .foregroundColor(.white)
-                            .opacity(0.3)
-                            .offset(y: -65)
-
-                        Slider(value: $playbackVolume, in: 0...1, step: 0.01)
-                            .onChange(of: playbackVolume) {
-                                if !isRecording {
-                                    audioManager.setPlaybackVolume(playbackVolume)
-                                }
-                            }
-                            .offset(y: 32) // Slider position adjusted here
-                    }
-                    .padding(.top, 5)
-                    .padding(.bottom, 20)
-                }
-
-                ZStack {
-                    FFTView(fftData: audioManager.fftData)
-                        .frame(height: 120)
-                        .padding()
-                    Text("Buffer")
-                        .font(.system(size: 40, weight: .bold))
-                        .foregroundColor(.white)
-                        .opacity(0.3)
-                }
+        VStack(spacing: 20) {
+            
+            TransportView(
+                audioManager: audioManager,
+                isEngineRunning: $isEngineRunning
+            )
+            
+            ScrollView {
                 
-                GroupBox {
-                    VStack(spacing: 5) {
-                        Slider(value: $loopLength, in: 0.01...2, step: 0.01)
-                            .onChange(of: loopLength) {
-                                audioManager.setLoopLength(loopLength)
-                            }
-                        Text("Buffer Length: \(loopLength, specifier: "%.2f") seconds")
-                        
-                        Text("Current Position: \(currentPosition, specifier: "%.2f") seconds")
-                    }
-                    .padding()
-                }
+                RecordLooperView(audioManager: audioManager)
+                
+                BufferView(audioManager: audioManager)
             }
-            .padding(.vertical)
         }
+        .padding(.vertical)
         .onAppear {
             audioManager.startEngine()
             audioManager.startLoopTracking { position in
@@ -164,7 +45,6 @@ struct ContentView: View {
         }
     }
 }
-
 #Preview {
     ContentView()
 }

@@ -11,6 +11,14 @@ import AVFoundation
 
 @MainActor
 class AudioManager: ObservableObject {
+    
+    @Published var micVolume: Float
+    @Published var playbackVolume: Float
+    @Published var isRecording: Bool = false
+    @Published var loopLength: Double = 5.0 // Default loop length in seconds
+    @Published var isPlaying: Bool = false
+    @Published var fftData = FFTData()
+    
     private var engine = AudioEngine()
     private(set) var micMixer = Mixer()
     private(set) var playbackMixer = Mixer()
@@ -18,21 +26,51 @@ class AudioManager: ObservableObject {
     private var mic: AudioEngine.InputNode?
     private var recorder: NodeRecorder?
     private var fftTap: FFTTap!
-    @Published var fftData = FFTData()
-
+    
+    class EventScheduler {
+        static let shared = EventScheduler()
+        
+        private init() {}
+        
+        func scheduleEvent(after delay: TimeInterval, event: @escaping () -> Void) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+                event()
+            }
+        }
+    }
+    
     init(micVolume: Float, playbackVolume: Float) {
+        self.micVolume = micVolume
+        self.playbackVolume = playbackVolume
         setupAudio(micVolume: micVolume, playbackVolume: playbackVolume)
+    }
+
+    // Update the volume methods to use the properties
+    func setMicVolume(_ volume: Float) {
+        self.micVolume = volume
+        self.micMixer.volume = AUValue(volume)
+    }
+
+    func setPlaybackVolume(_ volume: Float) {
+        self.playbackVolume = volume
+        self.playbackMixer.volume = AUValue(volume)
     }
 
     private func setupAudio(micVolume: Float, playbackVolume: Float) {
         
-        // Configure AVAudioSession for playback
         do {
-            try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker])
+            // Configure AVAudioSession for playback and recording
+            try AVAudioSession.sharedInstance().setCategory(
+                .playAndRecord,
+                mode: .default,
+                options: [.defaultToSpeaker, .allowBluetooth, .allowBluetoothA2DP, .allowAirPlay]
+            )
+            // Override the output audio port to use the speaker
             try AVAudioSession.sharedInstance().overrideOutputAudioPort(.speaker)
+            // Activate the audio session
             try AVAudioSession.sharedInstance().setActive(true)
         } catch {
-            print("Failed to set audio session category.")
+            print("Failed to set audio session category: \(error.localizedDescription)")
         }
 
         
@@ -40,7 +78,7 @@ class AudioManager: ObservableObject {
             print("Microphone input is not available.")
             return
         }
-
+        
         self.mic = mic
 
         micMixer.volume = AUValue(micVolume)
@@ -89,12 +127,14 @@ class AudioManager: ObservableObject {
 
     func startRecording(onComplete: @escaping () -> Void) {
         do {
-            try recorder?.record()
+            try self.recorder?.record()
+            self.isRecording = true
             print("Recording started")
             
-            // Schedule the stop of recording after the buffer duration (default is 5 seconds)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) { [weak self] in
+            // Gebruik de EventScheduler om de opname te stoppen na 5 seconden
+            EventScheduler.shared.scheduleEvent(after: loopLength) { [weak self] in
                 self?.stopRecording()
+                self?.isRecording = false
                 onComplete()
             }
         } catch {
@@ -103,7 +143,8 @@ class AudioManager: ObservableObject {
     }
 
     func stopRecording() {
-        recorder?.stop()
+        self.recorder?.stop()
+        self.isRecording = false
 
         if let recordedFile = recorder?.audioFile {
             do {
@@ -111,8 +152,9 @@ class AudioManager: ObservableObject {
                 try recordedFile.read(into: buffer!)
 
                 if let buffer = buffer {
-                    player.scheduleBuffer(buffer, at: nil, options: .loops)
-                    player.play()
+                    self.player.scheduleBuffer(buffer, at: nil, options: .loops)
+                    self.player.play()
+                    self.isPlaying = true
                     print("Playback started")
                 }
             } catch {
@@ -122,26 +164,45 @@ class AudioManager: ObservableObject {
     }
     
     func startPlayback() {
-        player.play()
+        EventScheduler.shared.scheduleEvent(after: 0.01) {
+            self.player.play()
+            self.isPlaying = true
+            print("Playback started")
+        }
     }
 
     func stopPlayback() {
-        player.stop()
+        EventScheduler.shared.scheduleEvent(after: 0.01) {
+            self.player.stop()
+            self.isPlaying = false
+            print("Playback stopped")
+        }
     }
 
     func setMicMuted(_ muted: Bool) {
-        micMixer.volume = muted ? 0 : 1.0
+        // Gebruik de volume-instelling van de microfoonmixer om de microfoon te dempen
+        self.micMixer.volume = muted ? 0 : 1.0
+        print("Mic is \(muted ? "muted" : "unmuted")")
+        
+        // Controleer of de sessie correct is ingesteld en actief is
+        if muted {
+            do {
+                try AVAudioSession.sharedInstance().setCategory(.playback, options: [.duckOthers])
+            } catch {
+                print("Failed to mute microphone: \(error.localizedDescription)")
+            }
+        } else {
+            do {
+                try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker])
+                try AVAudioSession.sharedInstance().setActive(true)
+            } catch {
+                print("Failed to unmute microphone: \(error.localizedDescription)")
+            }
+        }
     }
     
-    func setMicVolume(_ volume: Float) {
-        micMixer.volume = AUValue(volume)
-    }
-
-    func setPlaybackVolume(_ volume: Float) {
-        playbackMixer.volume = AUValue(volume)
-    }
-
     func setLoopLength(_ length: Double) {
+        self.loopLength = length
         if let recordedFile = recorder?.audioFile {
             let sampleRate = recordedFile.processingFormat.sampleRate
             let frameCount = AVAudioFrameCount(length * sampleRate)
@@ -153,8 +214,8 @@ class AudioManager: ObservableObject {
             
             do {
                 try recordedFile.read(into: buffer)
-                player.scheduleBuffer(buffer, at: nil, options: .loops)
-                player.play()
+                self.player.scheduleBuffer(buffer, at: nil, options: .loops)
+                self.player.play()
             } catch {
                 print("Error reading into buffer or scheduling playback: \(error)")
             }
@@ -178,8 +239,8 @@ class AudioManager: ObservableObject {
     }
 
     func cleanup() {
-        engine.stop()
-        fftTap.stop()
-        stopLoopTracking()
+        self.engine.stop()
+        self.fftTap.stop()
+        self.stopLoopTracking()
     }
 }

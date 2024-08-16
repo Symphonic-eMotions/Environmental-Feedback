@@ -16,6 +16,9 @@
 		7CD1CB702C688E0000887861 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD1CB6F2C688E0000887861 /* AudioManager.swift */; };
 		7CD1CB762C68BA5500887861 /* AudioKitEX in Frameworks */ = {isa = PBXBuildFile; productRef = 7CD1CB752C68BA5500887861 /* AudioKitEX */; };
 		7CD1CB782C69016300887861 /* FFTView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD1CB772C69016300887861 /* FFTView.swift */; };
+		7CD1CB7C2C6F4FF100887861 /* RecordLooperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD1CB7B2C6F4FF100887861 /* RecordLooperView.swift */; };
+		7CD1CB7E2C6F58A000887861 /* TransportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD1CB7D2C6F58A000887861 /* TransportView.swift */; };
+		7CD1CB802C6F598300887861 /* BufferView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD1CB7F2C6F598300887861 /* BufferView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +29,9 @@
 		7C205A542C5F626700646C10 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		7CD1CB6F2C688E0000887861 /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		7CD1CB772C69016300887861 /* FFTView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FFTView.swift; sourceTree = "<group>"; };
+		7CD1CB7B2C6F4FF100887861 /* RecordLooperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordLooperView.swift; sourceTree = "<group>"; };
+		7CD1CB7D2C6F58A000887861 /* TransportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransportView.swift; sourceTree = "<group>"; };
+		7CD1CB7F2C6F598300887861 /* BufferView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +97,9 @@
 			children = (
 				7C205A4F2C5F626500646C10 /* ContentView.swift */,
 				7CD1CB772C69016300887861 /* FFTView.swift */,
+				7CD1CB7B2C6F4FF100887861 /* RecordLooperView.swift */,
+				7CD1CB7D2C6F58A000887861 /* TransportView.swift */,
+				7CD1CB7F2C6F598300887861 /* BufferView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -175,9 +184,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7CD1CB7C2C6F4FF100887861 /* RecordLooperView.swift in Sources */,
+				7CD1CB802C6F598300887861 /* BufferView.swift in Sources */,
 				7C205A502C5F626500646C10 /* ContentView.swift in Sources */,
 				7C205A4E2C5F626500646C10 /* Environmental_FeedbackApp.swift in Sources */,
 				7CD1CB702C688E0000887861 /* AudioManager.swift in Sources */,
+				7CD1CB7E2C6F58A000887861 /* TransportView.swift in Sources */,
 				7CD1CB782C69016300887861 /* FFTView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
