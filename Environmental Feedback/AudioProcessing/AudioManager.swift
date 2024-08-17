@@ -8,6 +8,8 @@
 import SwiftUI
 import AudioKit
 import AVFoundation
+import SoundpipeAudioKit
+import AudioKitEX
 
 @MainActor
 class AudioManager: ObservableObject {
@@ -27,6 +29,9 @@ class AudioManager: ObservableObject {
     public var mic: AudioEngine.InputNode?
     private var recorder: NodeRecorder?
     private var fftTap: FFTTap!
+    
+    private var delay: VariableDelay!
+    private var dryWetMixer: DryWetMixer!
     
     class EventScheduler {
         static let shared = EventScheduler()
@@ -91,8 +96,14 @@ class AudioManager: ObservableObject {
         micMixerB.addInput(micMixerA)
         player.isLooping = true
         playbackMixer.addInput(player)
+        
+        delay = VariableDelay(playbackMixer) // Voeg delay toe aan de speler
+        delay.time = 0.1 // Standaard delay tijd
+        delay.feedback = 0.1 // Standaard feedback waarde
 
-        let mainMixer = Mixer(micMixerB, playbackMixer)
+        dryWetMixer = DryWetMixer(playbackMixer, delay)
+        
+        let mainMixer = Mixer(micMixerB, dryWetMixer)
         engine.output = mainMixer
 
         // Setup FFT Tap
@@ -112,6 +123,14 @@ class AudioManager: ObservableObject {
         } catch {
             print("Error starting AudioEngine: \(error)")
         }
+    }
+    
+    func setFeedback(_ value: Float) {
+        delay.feedback = AUValue(value)
+    }
+
+    func setDelayTime(_ value: Float) {
+        delay.time = AUValue(value)
     }
 
     func startEngine() {

@@ -47,13 +47,13 @@ struct RecordLooperView: View {
                     .opacity(0.3)
                     .offset(y: -65)
 
-                Slider(value: $audioManager.playbackVolume, in: 0...1, step: 0.01)
-                    .onChange(of: audioManager.playbackVolume) { newValue in
-                        if !audioManager.isRecording {
-                            audioManager.setPlaybackVolume(newValue)
-                        }
-                    }
-                    .offset(y: 32) // Slider position adjusted here
+//                Slider(value: $audioManager.playbackVolume, in: 0...1, step: 0.01)
+//                .onChange(of: audioManager.playbackVolume) { newValue in
+//                    if !audioManager.isRecording {
+//                        audioManager.setPlaybackVolume(newValue)
+//                    }
+//                }
+//                .offset(y: 32) // Slider position adjusted here
             }
             .padding(.top, 5)
             .padding(.bottom, 20)
