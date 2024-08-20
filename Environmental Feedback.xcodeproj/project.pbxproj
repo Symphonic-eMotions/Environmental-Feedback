@@ -35,6 +35,7 @@
 		7CD1CB7D2C6F58A000887861 /* TransportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransportView.swift; sourceTree = "<group>"; };
 		7CD1CB7F2C6F598300887861 /* BufferView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferView.swift; sourceTree = "<group>"; };
 		7CD1CB812C6FA04C00887861 /* MultiSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiSliderView.swift; sourceTree = "<group>"; };
+		7CD1CB892C71FC2900887861 /* Environmental-Feedback-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Environmental-Feedback-Info.plist"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +72,7 @@
 		7C205A4C2C5F626500646C10 /* Environmental Feedback */ = {
 			isa = PBXGroup;
 			children = (
+				7CD1CB892C71FC2900887861 /* Environmental-Feedback-Info.plist */,
 				7C205A4D2C5F626500646C10 /* Environmental_FeedbackApp.swift */,
 				7CD1CB712C6896B500887861 /* Views */,
 				7C205A602C5F668400646C10 /* AudioProcessing */,
@@ -335,6 +337,8 @@
 				DEVELOPMENT_TEAM = JJM4XR9TZN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Environmental-Feedback-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Microphone needed for capturing enviroment";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -366,6 +370,8 @@
 				DEVELOPMENT_TEAM = JJM4XR9TZN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Environmental-Feedback-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Microphone needed for capturing enviroment";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
