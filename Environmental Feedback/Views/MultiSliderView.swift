@@ -52,9 +52,8 @@ struct MultiSliderView: View {
         case 0:
             audioManager.setFeedback(value) // Feedback
         case 1:
-            // Voeg damper toe om delay waarden vloeiender te maken
-            let adjustedValue = Float(round(100 * value) / 100)
-            audioManager.setDelayTime(adjustedValue) // Delay time
+            // Gebruik exponentiële interpolatie voor delay tijd
+            audioManager.interpolateDelayTime(to: value, duration: 1.0) // Pas de duur aan voor vloeiendere overgang
         default:
             break
         }

@@ -30,8 +30,9 @@ class AudioManager: ObservableObject {
     private var recorder: NodeRecorder?
     private var fftTap: FFTTap!
     
-    private var delay: VariableDelay!
+    private(set) var delay: VariableDelay!
     private var dryWetMixer: DryWetMixer!
+    private var currentDelayTime: Float = 0.1
     
     class EventScheduler {
         static let shared = EventScheduler()
@@ -130,8 +131,33 @@ class AudioManager: ObservableObject {
     }
 
     func setDelayTime(_ value: Float) {
+        currentDelayTime = value
         delay.time = AUValue(value)
     }
+    
+    func getCurrentDelayTime() -> Float {
+        return currentDelayTime
+    }
+    
+    func interpolateDelayTime(to endValue: Float, duration: TimeInterval) {
+        let steps = 100 // Aantal stappen voor de interpolatie
+        let interval = duration / TimeInterval(steps)
+        let initialDelayTime = self.getCurrentDelayTime()
+        
+        for step in 0..<steps {
+            let t = Float(step) / Float(steps - 1) // Normaliseer tussen 0 en 1
+            let interpolatedValue = initialDelayTime + (endValue - initialDelayTime) * (1 - exp(-5 * t)) // Exponentiële interpolatie
+            
+            EventScheduler.shared.scheduleEvent(after: interval * TimeInterval(step)) {
+                self.setDelayTime(interpolatedValue)
+                
+                // Print de geinterpoleerde waarde naar de console voor debugging
+                print("Interpolated Delay Time at step \(step): \(interpolatedValue)")
+            }
+        }
+    }
+
+
 
     func startEngine() {
         do {
