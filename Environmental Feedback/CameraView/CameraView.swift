@@ -36,17 +36,17 @@
 import SwiftUI
 
 struct CameraView: UIViewControllerRepresentable {
-  var earDistanceHandler: ((CGFloat) -> Void)?
+    var earDistanceHandler: ((CGFloat) -> Void)?
+    var earPointsHandler: ((CGPoint, CGPoint) -> Void)? // Nieuwe closure parameter
+    
+    func makeUIViewController(context: Context) -> CameraViewController {
+        let cvc = CameraViewController()
+        cvc.earDistanceHandler = earDistanceHandler
+        cvc.earPointsHandler = earPointsHandler // Nieuwe closure doorgeven
+        return cvc
+    }
 
-  func makeUIViewController(context: Context) -> CameraViewController {
-    let cvc = CameraViewController()
-    cvc.earDistanceHandler = earDistanceHandler
-    return cvc
-  }
-
-  func updateUIViewController(
-    _ uiViewController: CameraViewController,
-    context: Context
-  ) {
-  }
+    func updateUIViewController(_ uiViewController: CameraViewController, context: Context) {
+        // Hier hoef je niets te doen
+    }
 }

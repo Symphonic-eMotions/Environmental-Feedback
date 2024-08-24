@@ -27,6 +27,7 @@ final class CameraViewController: UIViewController {
     private let earPoseRequest = VNDetectFaceLandmarksRequest()
     
     var earDistanceHandler: ((CGFloat) -> Void)?
+    var earPointsHandler: ((CGPoint, CGPoint) -> Void)? // Nieuw: Voor het doorgeven van oorlocaties
     
     override func loadView() {
         view = CameraPreview()
@@ -93,6 +94,13 @@ final class CameraViewController: UIViewController {
         // Bereken de afstand tussen de ogen (wat een benadering is voor de afstand tussen de oren)
         let distance = hypot(leftEyePoint.x - rightEyePoint.x, leftEyePoint.y - rightEyePoint.y)
         earDistanceHandler?(distance)
+        
+        // Simuleer de oorlocatie (hier neem ik aan dat de oren zich horizontaal uitgelijnd bevinden ten opzichte van de ogen)
+        let earOffset: CGFloat = distance * 0.5 // Je kunt deze waarde aanpassen op basis van je model
+        let leftEarPoint = CGPoint(x: leftEyePoint.x - earOffset, y: leftEyePoint.y)
+        let rightEarPoint = CGPoint(x: rightEyePoint.x + earOffset, y: rightEyePoint.y)
+        
+        earPointsHandler?(leftEarPoint, rightEarPoint) // Stuur de punten door
     }
 }
 
@@ -113,4 +121,3 @@ extension CameraViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
         }
     }
 }
-
