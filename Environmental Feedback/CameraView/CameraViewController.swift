@@ -87,20 +87,20 @@ final class CameraViewController: UIViewController {
             return
         }
 
-        // Neem het eerste punt van elk oog (meestal de buitenste hoek)
-        let leftEyePoint = cameraView.previewLayer.layerPointConverted(fromCaptureDevicePoint: leftEye.normalizedPoints.first!)
-        let rightEyePoint = cameraView.previewLayer.layerPointConverted(fromCaptureDevicePoint: rightEye.normalizedPoints.first!)
+        // Converteer en corrigeer de Y-coördinaat
+        let leftEyePoint = cameraView.previewLayer.layerPointConverted(fromCaptureDevicePoint: CGPoint(x: leftEye.normalizedPoints.first!.x, y: 1 - leftEye.normalizedPoints.first!.y))
+        let rightEyePoint = cameraView.previewLayer.layerPointConverted(fromCaptureDevicePoint: CGPoint(x: rightEye.normalizedPoints.first!.x, y: 1 - rightEye.normalizedPoints.first!.y))
 
-        // Bereken de afstand tussen de ogen (wat een benadering is voor de afstand tussen de oren)
+        // Bereken de afstand tussen de ogen
         let distance = hypot(leftEyePoint.x - rightEyePoint.x, leftEyePoint.y - rightEyePoint.y)
         earDistanceHandler?(distance)
         
-        // Simuleer de oorlocatie (hier neem ik aan dat de oren zich horizontaal uitgelijnd bevinden ten opzichte van de ogen)
-        let earOffset: CGFloat = distance * 0.5 // Je kunt deze waarde aanpassen op basis van je model
+        // Simuleer de oorlocatie (op basis van de gecorrigeerde ogen)
+        let earOffset: CGFloat = distance * 0.5
         let leftEarPoint = CGPoint(x: leftEyePoint.x - earOffset, y: leftEyePoint.y)
         let rightEarPoint = CGPoint(x: rightEyePoint.x + earOffset, y: rightEyePoint.y)
         
-        earPointsHandler?(leftEarPoint, rightEarPoint) // Stuur de punten door
+        earPointsHandler?(leftEarPoint, rightEarPoint)
     }
 }
 

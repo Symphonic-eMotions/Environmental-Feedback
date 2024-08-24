@@ -21,6 +21,10 @@ struct ContentView: View {
     @State private var leftEarPoint: CGPoint = .zero
     @State private var rightEarPoint: CGPoint = .zero
     
+    // Arrays to hold the previous positions for the trailing effect
+    @State private var leftEarTrail: [CGPoint] = []
+    @State private var rightEarTrail: [CGPoint] = []
+    
     var body: some View {
         VStack(spacing: 20) {
             TransportView(
@@ -38,6 +42,10 @@ struct ContentView: View {
                         let normalizedValue = Float(distance / UIScreen.main.bounds.width)
                         audioManager.interpolateDelayTime(to: normalizedValue, duration: 1.0)
                     }, earPointsHandler: { leftPoint, rightPoint in
+                        // Update trails
+                        updateTrail(&leftEarTrail, with: leftPoint)
+                        updateTrail(&rightEarTrail, with: rightPoint)
+                        
                         leftEarPoint = leftPoint
                         rightEarPoint = rightPoint
                     })
@@ -55,16 +63,25 @@ struct ContentView: View {
                         .cornerRadius(5)
                         .padding()
                     
-                    // Display the ear points
-                    Circle()
-                        .fill(Color.red)
-                        .frame(width: 10, height: 10)
-                        .position(leftEarPoint)
+                    // Display the trailing effect for the left ear
+                    ForEach(0..<leftEarTrail.count, id: \.self) { index in
+                        Circle()
+                            .fill(Color.red)
+                            .frame(width: 10, height: 10)
+                            .position(x: leftEarTrail[index].x, y: leftEarTrail[index].y)
+                            .opacity(Double(leftEarTrail.count - index) / Double(leftEarTrail.count)) // Fade effect
+                            .animation(.easeOut(duration: 0.5), value: leftEarTrail) // Smooth transition
+                    }
                     
-                    Circle()
-                        .fill(Color.red)
-                        .frame(width: 10, height: 10)
-                        .position(rightEarPoint)
+                    // Display the trailing effect for the right ear
+                    ForEach(0..<rightEarTrail.count, id: \.self) { index in
+                        Circle()
+                            .fill(Color.orange)
+                            .frame(width: 10, height: 10)
+                            .position(x: rightEarTrail[index].x, y: rightEarTrail[index].y)
+                            .opacity(Double(rightEarTrail.count - index) / Double(rightEarTrail.count)) // Fade effect
+                            .animation(.easeOut(duration: 0.5), value: rightEarTrail) // Smooth transition
+                    }
                 }
             }
         }
@@ -77,6 +94,14 @@ struct ContentView: View {
         }
         .onDisappear {
             audioManager.cleanup()
+        }
+    }
+    
+    // Helper function to update the trail
+    private func updateTrail(_ trail: inout [CGPoint], with newPoint: CGPoint) {
+        trail.append(newPoint)
+        if trail.count > 10 { // Limit the trail length
+            trail.removeFirst()
         }
     }
 }
