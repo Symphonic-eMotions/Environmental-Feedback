@@ -13,6 +13,11 @@
 		7C205A552C5F626700646C10 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C205A542C5F626700646C10 /* Preview Assets.xcassets */; };
 		7C205A5F2C5F653400646C10 /* AudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7C205A5E2C5F653400646C10 /* AudioKit */; };
 		7C4FEBBE2C64C382000E2865 /* AudioKitUI in Frameworks */ = {isa = PBXBuildFile; productRef = 7C4FEBBD2C64C382000E2865 /* AudioKitUI */; };
+		7C949D6E2C7A293000CB17BA /* EarTrackingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C949D6D2C7A293000CB17BA /* EarTrackingView.swift */; };
+		7C949D712C7A297400CB17BA /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C949D702C7A297400CB17BA /* CameraViewController.swift */; };
+		7C949D732C7A4B4700CB17BA /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C949D722C7A4B4700CB17BA /* CameraView.swift */; };
+		7C949D762C7A4BF700CB17BA /* CameraPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C949D752C7A4BF700CB17BA /* CameraPreview.swift */; };
+		7C949D792C7A4C7A00CB17BA /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C949D782C7A4C7A00CB17BA /* AppError.swift */; };
 		7CD1CB702C688E0000887861 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD1CB6F2C688E0000887861 /* AudioManager.swift */; };
 		7CD1CB762C68BA5500887861 /* AudioKitEX in Frameworks */ = {isa = PBXBuildFile; productRef = 7CD1CB752C68BA5500887861 /* AudioKitEX */; };
 		7CD1CB782C69016300887861 /* FFTView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD1CB772C69016300887861 /* FFTView.swift */; };
@@ -29,6 +34,11 @@
 		7C205A4F2C5F626500646C10 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7C205A512C5F626700646C10 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7C205A542C5F626700646C10 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		7C949D6D2C7A293000CB17BA /* EarTrackingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarTrackingView.swift; sourceTree = "<group>"; };
+		7C949D702C7A297400CB17BA /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
+		7C949D722C7A4B4700CB17BA /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
+		7C949D752C7A4BF700CB17BA /* CameraPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPreview.swift; sourceTree = "<group>"; };
+		7C949D782C7A4C7A00CB17BA /* AppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
 		7CD1CB6F2C688E0000887861 /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		7CD1CB772C69016300887861 /* FFTView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FFTView.swift; sourceTree = "<group>"; };
 		7CD1CB7B2C6F4FF100887861 /* RecordLooperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordLooperView.swift; sourceTree = "<group>"; };
@@ -75,7 +85,9 @@
 				7CD1CB892C71FC2900887861 /* Environmental-Feedback-Info.plist */,
 				7C205A4D2C5F626500646C10 /* Environmental_FeedbackApp.swift */,
 				7CD1CB712C6896B500887861 /* Views */,
+				7C949D742C7A4B5500CB17BA /* CameraView */,
 				7C205A602C5F668400646C10 /* AudioProcessing */,
+				7C949D772C7A4C6400CB17BA /* Supporting Files */,
 				7C205A512C5F626700646C10 /* Assets.xcassets */,
 				7C205A532C5F626700646C10 /* Preview Content */,
 			);
@@ -98,6 +110,24 @@
 			path = AudioProcessing;
 			sourceTree = "<group>";
 		};
+		7C949D742C7A4B5500CB17BA /* CameraView */ = {
+			isa = PBXGroup;
+			children = (
+				7C949D722C7A4B4700CB17BA /* CameraView.swift */,
+				7C949D702C7A297400CB17BA /* CameraViewController.swift */,
+				7C949D752C7A4BF700CB17BA /* CameraPreview.swift */,
+			);
+			path = CameraView;
+			sourceTree = "<group>";
+		};
+		7C949D772C7A4C6400CB17BA /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				7C949D782C7A4C7A00CB17BA /* AppError.swift */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		7CD1CB712C6896B500887861 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -107,6 +137,7 @@
 				7CD1CB7D2C6F58A000887861 /* TransportView.swift */,
 				7CD1CB7F2C6F598300887861 /* BufferView.swift */,
 				7CD1CB812C6FA04C00887861 /* MultiSliderView.swift */,
+				7C949D6D2C7A293000CB17BA /* EarTrackingView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -194,12 +225,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				7CD1CB7C2C6F4FF100887861 /* RecordLooperView.swift in Sources */,
+				7C949D712C7A297400CB17BA /* CameraViewController.swift in Sources */,
 				7CD1CB822C6FA04C00887861 /* MultiSliderView.swift in Sources */,
 				7CD1CB802C6F598300887861 /* BufferView.swift in Sources */,
+				7C949D792C7A4C7A00CB17BA /* AppError.swift in Sources */,
 				7C205A502C5F626500646C10 /* ContentView.swift in Sources */,
 				7C205A4E2C5F626500646C10 /* Environmental_FeedbackApp.swift in Sources */,
 				7CD1CB702C688E0000887861 /* AudioManager.swift in Sources */,
+				7C949D732C7A4B4700CB17BA /* CameraView.swift in Sources */,
 				7CD1CB7E2C6F58A000887861 /* TransportView.swift in Sources */,
+				7C949D762C7A4BF700CB17BA /* CameraPreview.swift in Sources */,
+				7C949D6E2C7A293000CB17BA /* EarTrackingView.swift in Sources */,
 				7CD1CB782C69016300887861 /* FFTView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -340,6 +376,7 @@
 				INFOPLIST_FILE = "Environmental-Feedback-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Control sound with your head";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Microphone needed for capturing enviroment";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -373,6 +410,7 @@
 				INFOPLIST_FILE = "Environmental-Feedback-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Control sound with your head";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Microphone needed for capturing enviroment";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
