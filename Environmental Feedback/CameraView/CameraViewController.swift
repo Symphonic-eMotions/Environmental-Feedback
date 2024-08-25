@@ -91,11 +91,11 @@ final class CameraViewController: UIViewController {
         // Converteer en corrigeer de Y-coördinaat
         let leftEyePoint = cameraView.previewLayer.layerPointConverted(fromCaptureDevicePoint: CGPoint(x: leftEye.normalizedPoints.first!.x, y: 1 - leftEye.normalizedPoints.first!.y))
         let rightEyePoint = cameraView.previewLayer.layerPointConverted(fromCaptureDevicePoint: CGPoint(x: rightEye.normalizedPoints.first!.x, y: 1 - rightEye.normalizedPoints.first!.y))
-//
-//        // Bereken de afstand tussen de ogen
-        let distance = hypot(leftEyePoint.x - rightEyePoint.x, leftEyePoint.y - rightEyePoint.y)
-//        earDistanceHandler?(distance)
 
+        // Bereken de afstand tussen de ogen
+        let distance = hypot(leftEyePoint.x - rightEyePoint.x, leftEyePoint.y - rightEyePoint.y)
+        earDistanceHandler?(distance)
+        
         // Oogcorrectie toevoegen (optioneel, vergelijkbaar met de neus)
         let eyeOffsetY: CGFloat = distance * 0.1 // Kleine verticale aanpassing voor de ogen
 
