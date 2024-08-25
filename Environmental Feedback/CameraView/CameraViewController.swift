@@ -3,7 +3,7 @@
 //  Environmental Feedback
 //
 //  Created by Frans-Jan Wind on 24/08/2024.
-//  Copied from:
+//  Copied and anhanced from:
 /// Copyright (c) 2021 Razeware LLC
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -21,7 +21,10 @@ import Vision
 import AVFoundation
 
 final class CameraViewController: UIViewController {
-    private var cameraView: CameraPreview { view as! CameraPreview }
+    private lazy var cameraView: CameraPreview = {
+        assert(Thread.isMainThread, "cameraView should only be accessed on the main thread")
+        return view as! CameraPreview
+    }()
     private let videoDataOutputQueue = DispatchQueue(label: "CameraFeedOutput", qos: .userInteractive)
     private var cameraFeedSession: AVCaptureSession?
     private let earPoseRequest = VNDetectFaceLandmarksRequest()
@@ -36,15 +39,19 @@ final class CameraViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        do {
-            if cameraFeedSession == nil {
-                try setupAVSession()
-                cameraView.previewLayer.session = cameraFeedSession
-                cameraView.previewLayer.videoGravity = .resizeAspectFill
+        DispatchQueue.global(qos: .background).async {
+            do {
+                if self.cameraFeedSession == nil {
+                    try self.setupAVSession()
+                    DispatchQueue.main.async {
+                        self.cameraView.previewLayer.session = self.cameraFeedSession
+                        self.cameraView.previewLayer.videoGravity = .resizeAspectFill
+                    }
+                }
+                self.cameraFeedSession?.startRunning()
+            } catch {
+                print(error.localizedDescription)
             }
-            cameraFeedSession?.startRunning()
-        } catch {
-            print(error.localizedDescription)
         }
     }
 
@@ -84,35 +91,37 @@ final class CameraViewController: UIViewController {
     }
 
     private func processFaceLandmarks(_ landmarks: VNFaceLandmarks2D) {
-        guard let leftEye = landmarks.leftEye, let rightEye = landmarks.rightEye else {
-            return
-        }
+        DispatchQueue.main.async {
+            guard let leftEye = landmarks.leftEye, let rightEye = landmarks.rightEye else {
+                return
+            }
 
-        // Converteer en corrigeer de Y-coördinaat
-        let leftEyePoint = cameraView.previewLayer.layerPointConverted(fromCaptureDevicePoint: CGPoint(x: leftEye.normalizedPoints.first!.x, y: 1 - leftEye.normalizedPoints.first!.y))
-        let rightEyePoint = cameraView.previewLayer.layerPointConverted(fromCaptureDevicePoint: CGPoint(x: rightEye.normalizedPoints.first!.x, y: 1 - rightEye.normalizedPoints.first!.y))
+            // Converteer en corrigeer de Y-coördinaat
+            let leftEyePoint = self.cameraView.previewLayer.layerPointConverted(fromCaptureDevicePoint: CGPoint(x: leftEye.normalizedPoints.first!.x, y: 1 - leftEye.normalizedPoints.first!.y))
+            let rightEyePoint = self.cameraView.previewLayer.layerPointConverted(fromCaptureDevicePoint: CGPoint(x: rightEye.normalizedPoints.first!.x, y: 1 - rightEye.normalizedPoints.first!.y))
 
-        // Bereken de afstand tussen de ogen
-        let distance = hypot(leftEyePoint.x - rightEyePoint.x, leftEyePoint.y - rightEyePoint.y)
-        earDistanceHandler?(distance)
-        
-        // Oogcorrectie toevoegen (optioneel, vergelijkbaar met de neus)
-        let eyeOffsetY: CGFloat = distance * 0.1 // Kleine verticale aanpassing voor de ogen
-
-        let correctedLeftEyePoint = CGPoint(x: leftEyePoint.x, y: leftEyePoint.y + eyeOffsetY)
-        let correctedRightEyePoint = CGPoint(x: rightEyePoint.x, y: rightEyePoint.y + eyeOffsetY)
-
-        earPointsHandler?(correctedLeftEyePoint, correctedRightEyePoint)
-        
-        // Neuspositie berekenen en corrigeren
-        if let nose = landmarks.nose {
-            let nosePoint = cameraView.previewLayer.layerPointConverted(fromCaptureDevicePoint: CGPoint(x: nose.normalizedPoints.first!.x, y: 1 - nose.normalizedPoints.first!.y))
-
-            // Voeg een correctie toe om de neus lager te plaatsen
-            let noseOffsetY: CGFloat = distance * 0.45 // Kleine verticale aanpassing voor de neus
-            let correctedNosePoint = CGPoint(x: nosePoint.x, y: nosePoint.y + noseOffsetY)
+            // Bereken de afstand tussen de ogen
+            let distance = hypot(leftEyePoint.x - rightEyePoint.x, leftEyePoint.y - rightEyePoint.y)
+            self.earDistanceHandler?(distance)
             
-            nosePointHandler?(correctedNosePoint)
+            // Oogcorrectie toevoegen (optioneel, vergelijkbaar met de neus)
+            let eyeOffsetY: CGFloat = distance * 0.1 // Kleine verticale aanpassing voor de ogen
+
+            let correctedLeftEyePoint = CGPoint(x: leftEyePoint.x, y: leftEyePoint.y + eyeOffsetY)
+            let correctedRightEyePoint = CGPoint(x: rightEyePoint.x, y: rightEyePoint.y + eyeOffsetY)
+
+            self.earPointsHandler?(correctedLeftEyePoint, correctedRightEyePoint)
+            
+            // Neuspositie berekenen en corrigeren
+            if let nose = landmarks.nose {
+                let nosePoint = self.cameraView.previewLayer.layerPointConverted(fromCaptureDevicePoint: CGPoint(x: nose.normalizedPoints.first!.x, y: 1 - nose.normalizedPoints.first!.y))
+
+                // Voeg een correctie toe om de neus lager te plaatsen
+                let noseOffsetY: CGFloat = distance * 0.45 // Kleine verticale aanpassing voor de neus
+                let correctedNosePoint = CGPoint(x: nosePoint.x, y: nosePoint.y + noseOffsetY)
+                
+                self.nosePointHandler?(correctedNosePoint)
+            }
         }
     }
 }
