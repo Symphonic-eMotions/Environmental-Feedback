@@ -17,12 +17,18 @@ struct ContentView: View {
     @State private var isEngineRunning = false
     @State private var currentPosition: Double = 0.0
     
-    @State private var earDistance: CGFloat = 0.0
+    @State private var leftNoseDistance: CGFloat = 0.0
+    @State private var rightNoseDistance: CGFloat = 0.0
+    
+    @State private var minLeftNoseDistance: CGFloat = .greatestFiniteMagnitude
+    @State private var maxLeftNoseDistance: CGFloat = 0.0
+    @State private var minRightNoseDistance: CGFloat = .greatestFiniteMagnitude
+    @State private var maxRightNoseDistance: CGFloat = 0.0
+    
     @State private var leftEarPoint: CGPoint = .zero
     @State private var rightEarPoint: CGPoint = .zero
-    @State private var nosePoint: CGPoint = .zero 
+    @State private var nosePoint: CGPoint = .zero
     
-    // Arrays to hold the previous positions for the trailing effect
     @State private var leftEarTrail: [CGPoint] = []
     @State private var rightEarTrail: [CGPoint] = []
     @State private var noseTrail: [CGPoint] = []
@@ -35,43 +41,53 @@ struct ContentView: View {
             )
             
             ScrollView {
-                
                 RecordLooperView(audioManager: audioManager)
 
                 ZStack(alignment: .topLeading) {
-                    CameraView(earDistanceHandler: { distance in
-                       earDistance = distance
-                       let normalizedValue = Float(distance / UIScreen.main.bounds.width)
-                       audioManager.interpolateDelayTime(to: normalizedValue, duration: 1.0)
-                   }, earPointsHandler: { leftPoint, rightPoint in
-                       // Update trails
-                       updateTrail(&leftEarTrail, with: leftPoint)
-                       updateTrail(&rightEarTrail, with: rightPoint)
-                       
-                       leftEarPoint = leftPoint
-                       rightEarPoint = rightPoint
-                   }, nosePointHandler: { nosePoint in
-                       updateTrail(&noseTrail, with: nosePoint) // Update neus trail
-                       self.nosePoint = nosePoint // Update neuspositie
-                   })
-                   .aspectRatio(3/4, contentMode: .fit) // Correcte aspect ratio voor de front-facing camera in portrait
-                   .frame(maxWidth: .infinity)
-                   .background(Color.gray.opacity(0.1))
-                   .padding()
+                    CameraView(earDistanceHandler: { _ in
+                        
+                        //Hier moeten we de waarden naar de audio enigine sturen:
+                        //audioManager.interpolateDelayTime(to: normalizedValue, duration: 1.0)
+                        
+                    }, earPointsHandler: { leftPoint, rightPoint in
+                        updateTrail(&leftEarTrail, with: leftPoint)
+                        updateTrail(&rightEarTrail, with: rightPoint)
+                        
+                        leftEarPoint = leftPoint
+                        rightEarPoint = rightPoint
+                    }, nosePointHandler: { nosePoint in
+                        updateTrail(&noseTrail, with: nosePoint)
+                        self.nosePoint = nosePoint
+                        
+                        // Bereken de afstanden
+                        let leftDistance = hypot(nosePoint.x - leftEarPoint.x, nosePoint.y - leftEarPoint.y)
+                        let rightDistance = hypot(nosePoint.x - rightEarPoint.x, nosePoint.y - rightEarPoint.y)
+                        
+                        // Update de afstanden
+                        leftNoseDistance = leftDistance
+                        rightNoseDistance = rightDistance
+                        
+                        // Update de minimum- en maximumwaarden
+                        minLeftNoseDistance = min(minLeftNoseDistance, leftDistance)
+                        maxLeftNoseDistance = max(maxLeftNoseDistance, leftDistance)
+                        minRightNoseDistance = min(minRightNoseDistance, rightDistance)
+                        maxRightNoseDistance = max(maxRightNoseDistance, rightDistance)
+                    })
+                    .aspectRatio(3/4, contentMode: .fit)
+                    .frame(maxWidth: .infinity)
+                    .background(Color.gray.opacity(0.1))
+                    .padding()
                     
-                    // Display earDistance as a small overlay in the top-left corner
-                    Text(String(format: "Distance: %.2f", earDistance))
-                        .font(.caption)
-                        .padding(5)
-                        .background(Color.black.opacity(0.7))
-                        .foregroundColor(.white)
-                        .cornerRadius(5)
-                        .padding()
+                    VStack(alignment: .leading, spacing: 10) {
+                        DistanceView(label: "Distance", color: Color.purple, current: leftNoseDistance, min: minLeftNoseDistance, max: maxLeftNoseDistance)
+                        DistanceView(label: "Distance", color: Color.orange, current: rightNoseDistance, min: minRightNoseDistance, max: maxRightNoseDistance)
+                    }
+//                    .padding()
                     
                     // Display the trailing effect for the left ear
                     ForEach(0..<leftEarTrail.count, id: \.self) { index in
                         Circle()
-                            .fill(Color.red)
+                            .fill(Color.purple)
                             .frame(width: 10, height: 10)
                             .position(x: leftEarTrail[index].x, y: leftEarTrail[index].y)
                             .opacity(Double(leftEarTrail.count - index) / Double(leftEarTrail.count)) // Fade effect
@@ -96,6 +112,7 @@ struct ContentView: View {
                             .opacity(Double(noseTrail.count - index) / Double(noseTrail.count)) // Fade effect
                             .animation(.easeOut(duration: 0.5), value: noseTrail) // Smooth transition
                     }
+                    
                 }
             }
         }
@@ -111,10 +128,9 @@ struct ContentView: View {
         }
     }
     
-    // Helper function to update the trail
     private func updateTrail(_ trail: inout [CGPoint], with newPoint: CGPoint) {
         trail.append(newPoint)
-        if trail.count > 10 { // Limit the trail length
+        if trail.count > 10 {
             trail.removeFirst()
         }
     }

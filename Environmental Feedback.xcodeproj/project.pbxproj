@@ -13,6 +13,7 @@
 		7C205A552C5F626700646C10 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C205A542C5F626700646C10 /* Preview Assets.xcassets */; };
 		7C205A5F2C5F653400646C10 /* AudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7C205A5E2C5F653400646C10 /* AudioKit */; };
 		7C4FEBBE2C64C382000E2865 /* AudioKitUI in Frameworks */ = {isa = PBXBuildFile; productRef = 7C4FEBBD2C64C382000E2865 /* AudioKitUI */; };
+		7C8B6A742C7B6B3400B14E3E /* DistanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8B6A732C7B6B3400B14E3E /* DistanceView.swift */; };
 		7C949D6E2C7A293000CB17BA /* EarTrackingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C949D6D2C7A293000CB17BA /* EarTrackingView.swift */; };
 		7C949D712C7A297400CB17BA /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C949D702C7A297400CB17BA /* CameraViewController.swift */; };
 		7C949D732C7A4B4700CB17BA /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C949D722C7A4B4700CB17BA /* CameraView.swift */; };
@@ -34,6 +35,7 @@
 		7C205A4F2C5F626500646C10 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7C205A512C5F626700646C10 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7C205A542C5F626700646C10 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		7C8B6A732C7B6B3400B14E3E /* DistanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistanceView.swift; sourceTree = "<group>"; };
 		7C949D6D2C7A293000CB17BA /* EarTrackingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarTrackingView.swift; sourceTree = "<group>"; };
 		7C949D702C7A297400CB17BA /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		7C949D722C7A4B4700CB17BA /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
@@ -138,6 +140,7 @@
 				7CD1CB7F2C6F598300887861 /* BufferView.swift */,
 				7CD1CB812C6FA04C00887861 /* MultiSliderView.swift */,
 				7C949D6D2C7A293000CB17BA /* EarTrackingView.swift */,
+				7C8B6A732C7B6B3400B14E3E /* DistanceView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -233,6 +236,7 @@
 				7C205A4E2C5F626500646C10 /* Environmental_FeedbackApp.swift in Sources */,
 				7CD1CB702C688E0000887861 /* AudioManager.swift in Sources */,
 				7C949D732C7A4B4700CB17BA /* CameraView.swift in Sources */,
+				7C8B6A742C7B6B3400B14E3E /* DistanceView.swift in Sources */,
 				7CD1CB7E2C6F58A000887861 /* TransportView.swift in Sources */,
 				7C949D762C7A4BF700CB17BA /* CameraPreview.swift in Sources */,
 				7C949D6E2C7A293000CB17BA /* EarTrackingView.swift in Sources */,
