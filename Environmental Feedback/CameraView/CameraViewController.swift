@@ -95,12 +95,21 @@ final class CameraViewController: UIViewController {
         let distance = hypot(leftEyePoint.x - rightEyePoint.x, leftEyePoint.y - rightEyePoint.y)
         earDistanceHandler?(distance)
         
-        // Simuleer de oorlocatie (op basis van de gecorrigeerde ogen)
-        let earOffset: CGFloat = distance * 0.5
-        let leftEarPoint = CGPoint(x: leftEyePoint.x - earOffset, y: leftEyePoint.y)
-        let rightEarPoint = CGPoint(x: rightEyePoint.x + earOffset, y: rightEyePoint.y)
+        // Bereken de breedte van de preview layer
+        let previewWidth = cameraView.previewLayer.bounds.width
         
-        earPointsHandler?(leftEarPoint, rightEarPoint)
+        // Verbeterde oorpositie (op basis van de gecorrigeerde ogen)
+        let earOffsetX: CGFloat = distance * 0.8 // Verhoogde offset om de oren verder naar buiten te plaatsen
+        let earOffsetY: CGFloat = distance * 0.4 // Kleine verticale aanpassing
+
+        let leftEarPoint = CGPoint(x: leftEyePoint.x - earOffsetX, y: leftEyePoint.y + earOffsetY)
+        let rightEarPoint = CGPoint(x: rightEyePoint.x + earOffsetX, y: rightEyePoint.y + earOffsetY)
+        
+        let correctedLeftEarPoint = CGPoint(x: previewWidth - rightEarPoint.x, y: rightEarPoint.y)
+        let correctedRightEarPoint = CGPoint(x: previewWidth - leftEarPoint.x, y: leftEarPoint.y)
+
+
+        earPointsHandler?(correctedLeftEarPoint, correctedRightEarPoint)
     }
 }
 

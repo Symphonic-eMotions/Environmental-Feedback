@@ -49,7 +49,7 @@ struct ContentView: View {
                         leftEarPoint = leftPoint
                         rightEarPoint = rightPoint
                     })
-                    .aspectRatio(4/3, contentMode: .fit)
+                    .aspectRatio(3/4, contentMode: .fit) // Correcte aspect ratio voor de front-facing camera in portrait
                     .frame(maxWidth: .infinity)
                     .background(Color.gray.opacity(0.1))
                     .padding()
