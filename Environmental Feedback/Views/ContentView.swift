@@ -112,7 +112,6 @@ struct ContentView: View {
                             .opacity(Double(noseTrail.count - index) / Double(noseTrail.count)) // Fade effect
                             .animation(.easeOut(duration: 0.5), value: noseTrail) // Smooth transition
                     }
-                    
                 }
             }
         }
@@ -122,6 +121,7 @@ struct ContentView: View {
             audioManager.startLoopTracking { position in
                 currentPosition = position
             }
+            UIApplication.shared.isIdleTimerDisabled = true
         }
         .onDisappear {
             audioManager.cleanup()
