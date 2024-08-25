@@ -27,8 +27,9 @@ final class CameraViewController: UIViewController {
     private let earPoseRequest = VNDetectFaceLandmarksRequest()
     
     var earDistanceHandler: ((CGFloat) -> Void)?
-    var earPointsHandler: ((CGPoint, CGPoint) -> Void)? // Nieuw: Voor het doorgeven van oorlocaties
-    
+    var earPointsHandler: ((CGPoint, CGPoint) -> Void)?
+    var nosePointHandler: ((CGPoint) -> Void)?
+
     override func loadView() {
         view = CameraPreview()
     }
@@ -108,8 +109,18 @@ final class CameraViewController: UIViewController {
         let correctedLeftEarPoint = CGPoint(x: previewWidth - rightEarPoint.x, y: rightEarPoint.y)
         let correctedRightEarPoint = CGPoint(x: previewWidth - leftEarPoint.x, y: leftEarPoint.y)
 
-
         earPointsHandler?(correctedLeftEarPoint, correctedRightEarPoint)
+        
+        // Neuspositie berekenen en corrigeren
+        if let nose = landmarks.nose {
+            let nosePoint = cameraView.previewLayer.layerPointConverted(fromCaptureDevicePoint: CGPoint(x: nose.normalizedPoints.first!.x, y: 1 - nose.normalizedPoints.first!.y))
+
+            // Voeg een correctie toe om de neus lager te plaatsen
+            let noseOffsetY: CGFloat = distance * 0.3 // Kleine verticale aanpassing voor de neus
+            let correctedNosePoint = CGPoint(x: nosePoint.x, y: nosePoint.y + noseOffsetY)
+            
+            nosePointHandler?(correctedNosePoint)
+        }
     }
 }
 

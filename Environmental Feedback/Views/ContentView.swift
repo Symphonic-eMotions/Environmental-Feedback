@@ -20,11 +20,13 @@ struct ContentView: View {
     @State private var earDistance: CGFloat = 0.0
     @State private var leftEarPoint: CGPoint = .zero
     @State private var rightEarPoint: CGPoint = .zero
+    @State private var nosePoint: CGPoint = .zero 
     
     // Arrays to hold the previous positions for the trailing effect
     @State private var leftEarTrail: [CGPoint] = []
     @State private var rightEarTrail: [CGPoint] = []
-    
+    @State private var noseTrail: [CGPoint] = []
+
     var body: some View {
         VStack(spacing: 20) {
             TransportView(
@@ -38,21 +40,24 @@ struct ContentView: View {
 
                 ZStack(alignment: .topLeading) {
                     CameraView(earDistanceHandler: { distance in
-                        earDistance = distance
-                        let normalizedValue = Float(distance / UIScreen.main.bounds.width)
-                        audioManager.interpolateDelayTime(to: normalizedValue, duration: 1.0)
-                    }, earPointsHandler: { leftPoint, rightPoint in
-                        // Update trails
-                        updateTrail(&leftEarTrail, with: leftPoint)
-                        updateTrail(&rightEarTrail, with: rightPoint)
-                        
-                        leftEarPoint = leftPoint
-                        rightEarPoint = rightPoint
-                    })
-                    .aspectRatio(3/4, contentMode: .fit) // Correcte aspect ratio voor de front-facing camera in portrait
-                    .frame(maxWidth: .infinity)
-                    .background(Color.gray.opacity(0.1))
-                    .padding()
+                       earDistance = distance
+                       let normalizedValue = Float(distance / UIScreen.main.bounds.width)
+                       audioManager.interpolateDelayTime(to: normalizedValue, duration: 1.0)
+                   }, earPointsHandler: { leftPoint, rightPoint in
+                       // Update trails
+                       updateTrail(&leftEarTrail, with: leftPoint)
+                       updateTrail(&rightEarTrail, with: rightPoint)
+                       
+                       leftEarPoint = leftPoint
+                       rightEarPoint = rightPoint
+                   }, nosePointHandler: { nosePoint in
+                       updateTrail(&noseTrail, with: nosePoint) // Update neus trail
+                       self.nosePoint = nosePoint // Update neuspositie
+                   })
+                   .aspectRatio(3/4, contentMode: .fit) // Correcte aspect ratio voor de front-facing camera in portrait
+                   .frame(maxWidth: .infinity)
+                   .background(Color.gray.opacity(0.1))
+                   .padding()
                     
                     // Display earDistance as a small overlay in the top-left corner
                     Text(String(format: "Distance: %.2f", earDistance))
@@ -81,6 +86,15 @@ struct ContentView: View {
                             .position(x: rightEarTrail[index].x, y: rightEarTrail[index].y)
                             .opacity(Double(rightEarTrail.count - index) / Double(rightEarTrail.count)) // Fade effect
                             .animation(.easeOut(duration: 0.5), value: rightEarTrail) // Smooth transition
+                    }
+                    
+                    ForEach(0..<noseTrail.count, id: \.self) { index in
+                        Circle()
+                            .fill(Color.blue)
+                            .frame(width: 10, height: 10)
+                            .position(x: noseTrail[index].x, y: noseTrail[index].y)
+                            .opacity(Double(noseTrail.count - index) / Double(noseTrail.count)) // Fade effect
+                            .animation(.easeOut(duration: 0.5), value: noseTrail) // Smooth transition
                     }
                 }
             }

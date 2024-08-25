@@ -1,24 +1,24 @@
+////
+////  EarTrackingView.swift
+////  Environmental Feedback
+////
+////  Created by Frans-Jan Wind on 24/08/2024.
+////
 //
-//  EarTrackingView.swift
-//  Environmental Feedback
+//import SwiftUI
 //
-//  Created by Frans-Jan Wind on 24/08/2024.
+//struct EarTrackingView: UIViewControllerRepresentable {
+//    @Binding var earDistance: CGFloat
+//    
+//    func makeUIViewController(context: Context) -> CameraViewController {
+//        let cvc = CameraViewController()
+//        cvc.earDistanceHandler = { distance in
+//            DispatchQueue.main.async {
+//                self.earDistance = distance
+//            }
+//        }
+//        return cvc
+//    }
 //
-
-import SwiftUI
-
-struct EarTrackingView: UIViewControllerRepresentable {
-    @Binding var earDistance: CGFloat
-    
-    func makeUIViewController(context: Context) -> CameraViewController {
-        let cvc = CameraViewController()
-        cvc.earDistanceHandler = { distance in
-            DispatchQueue.main.async {
-                self.earDistance = distance
-            }
-        }
-        return cvc
-    }
-
-    func updateUIViewController(_ uiViewController: CameraViewController, context: Context) {}
-}
+//    func updateUIViewController(_ uiViewController: CameraViewController, context: Context) {}
+//}
