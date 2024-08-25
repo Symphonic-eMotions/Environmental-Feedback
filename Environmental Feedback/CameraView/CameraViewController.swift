@@ -91,32 +91,25 @@ final class CameraViewController: UIViewController {
         // Converteer en corrigeer de Y-coördinaat
         let leftEyePoint = cameraView.previewLayer.layerPointConverted(fromCaptureDevicePoint: CGPoint(x: leftEye.normalizedPoints.first!.x, y: 1 - leftEye.normalizedPoints.first!.y))
         let rightEyePoint = cameraView.previewLayer.layerPointConverted(fromCaptureDevicePoint: CGPoint(x: rightEye.normalizedPoints.first!.x, y: 1 - rightEye.normalizedPoints.first!.y))
-
-        // Bereken de afstand tussen de ogen
+//
+//        // Bereken de afstand tussen de ogen
         let distance = hypot(leftEyePoint.x - rightEyePoint.x, leftEyePoint.y - rightEyePoint.y)
-        earDistanceHandler?(distance)
-        
-        // Bereken de breedte van de preview layer
-        let previewWidth = cameraView.previewLayer.bounds.width
-        
-        // Verbeterde oorpositie (op basis van de gecorrigeerde ogen)
-        let earOffsetX: CGFloat = distance * 0.8 // Verhoogde offset om de oren verder naar buiten te plaatsen
-        let earOffsetY: CGFloat = distance * 0.4 // Kleine verticale aanpassing
+//        earDistanceHandler?(distance)
 
-        let leftEarPoint = CGPoint(x: leftEyePoint.x - earOffsetX, y: leftEyePoint.y + earOffsetY)
-        let rightEarPoint = CGPoint(x: rightEyePoint.x + earOffsetX, y: rightEyePoint.y + earOffsetY)
-        
-        let correctedLeftEarPoint = CGPoint(x: previewWidth - rightEarPoint.x, y: rightEarPoint.y)
-        let correctedRightEarPoint = CGPoint(x: previewWidth - leftEarPoint.x, y: leftEarPoint.y)
+        // Oogcorrectie toevoegen (optioneel, vergelijkbaar met de neus)
+        let eyeOffsetY: CGFloat = distance * 0.1 // Kleine verticale aanpassing voor de ogen
 
-        earPointsHandler?(correctedLeftEarPoint, correctedRightEarPoint)
+        let correctedLeftEyePoint = CGPoint(x: leftEyePoint.x, y: leftEyePoint.y + eyeOffsetY)
+        let correctedRightEyePoint = CGPoint(x: rightEyePoint.x, y: rightEyePoint.y + eyeOffsetY)
+
+        earPointsHandler?(correctedLeftEyePoint, correctedRightEyePoint)
         
         // Neuspositie berekenen en corrigeren
         if let nose = landmarks.nose {
             let nosePoint = cameraView.previewLayer.layerPointConverted(fromCaptureDevicePoint: CGPoint(x: nose.normalizedPoints.first!.x, y: 1 - nose.normalizedPoints.first!.y))
 
             // Voeg een correctie toe om de neus lager te plaatsen
-            let noseOffsetY: CGFloat = distance * 0.3 // Kleine verticale aanpassing voor de neus
+            let noseOffsetY: CGFloat = distance * 0.45 // Kleine verticale aanpassing voor de neus
             let correctedNosePoint = CGPoint(x: nosePoint.x, y: nosePoint.y + noseOffsetY)
             
             nosePointHandler?(correctedNosePoint)
