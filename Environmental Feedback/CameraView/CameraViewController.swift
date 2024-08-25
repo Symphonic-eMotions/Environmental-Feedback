@@ -105,7 +105,7 @@ final class CameraViewController: UIViewController {
             self.earDistanceHandler?(distance)
             
             // Oogcorrectie toevoegen (optioneel, vergelijkbaar met de neus)
-            let eyeOffsetY: CGFloat = distance * 0.1 // Kleine verticale aanpassing voor de ogen
+            let eyeOffsetY: CGFloat = distance * 0.4 // Kleine verticale aanpassing voor de ogen
 
             let correctedLeftEyePoint = CGPoint(x: leftEyePoint.x, y: leftEyePoint.y + eyeOffsetY)
             let correctedRightEyePoint = CGPoint(x: rightEyePoint.x, y: rightEyePoint.y + eyeOffsetY)
@@ -117,7 +117,7 @@ final class CameraViewController: UIViewController {
                 let nosePoint = self.cameraView.previewLayer.layerPointConverted(fromCaptureDevicePoint: CGPoint(x: nose.normalizedPoints.first!.x, y: 1 - nose.normalizedPoints.first!.y))
 
                 // Voeg een correctie toe om de neus lager te plaatsen
-                let noseOffsetY: CGFloat = distance * 0.45 // Kleine verticale aanpassing voor de neus
+                let noseOffsetY: CGFloat = distance * 0.7 // Kleine verticale aanpassing voor de neus
                 let correctedNosePoint = CGPoint(x: nosePoint.x, y: nosePoint.y + noseOffsetY)
                 
                 self.nosePointHandler?(correctedNosePoint)

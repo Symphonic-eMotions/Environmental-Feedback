@@ -19,11 +19,14 @@ struct ContentView: View {
     
     @State private var leftNoseDistance: CGFloat = 0.0
     @State private var rightNoseDistance: CGFloat = 0.0
+    @State private var noseTrailVariation: CGFloat = 0.0
     
     @State private var minLeftNoseDistance: CGFloat = .greatestFiniteMagnitude
     @State private var maxLeftNoseDistance: CGFloat = 0.0
     @State private var minRightNoseDistance: CGFloat = .greatestFiniteMagnitude
     @State private var maxRightNoseDistance: CGFloat = 0.0
+    @State private var minNoseTrailVariations: CGFloat = .greatestFiniteMagnitude
+    @State private var maxNoseTrailVariations: CGFloat = 0.0
     
     @State private var leftEarPoint: CGPoint = .zero
     @State private var rightEarPoint: CGPoint = .zero
@@ -32,7 +35,7 @@ struct ContentView: View {
     @State private var leftEarTrail: [CGPoint] = []
     @State private var rightEarTrail: [CGPoint] = []
     @State private var noseTrail: [CGPoint] = []
-
+    
     var body: some View {
         VStack(spacing: 20) {
             TransportView(
@@ -67,11 +70,22 @@ struct ContentView: View {
                         leftNoseDistance = leftDistance
                         rightNoseDistance = rightDistance
                         
+                        // Bereken de variatie in de staart van de neus
+                        var totalDistance: CGFloat = 0.0
+                        for i in 1..<noseTrail.count {
+                            let point1 = noseTrail[i - 1]
+                            let point2 = noseTrail[i]
+                            totalDistance += hypot(point2.x - point1.x, point2.y - point1.y)
+                        }
+                        noseTrailVariation = noseTrail.count > 1 ? totalDistance / CGFloat(noseTrail.count - 1) : 0.0
+                        
                         // Update de minimum- en maximumwaarden
                         minLeftNoseDistance = min(minLeftNoseDistance, leftDistance)
                         maxLeftNoseDistance = max(maxLeftNoseDistance, leftDistance)
                         minRightNoseDistance = min(minRightNoseDistance, rightDistance)
                         maxRightNoseDistance = max(maxRightNoseDistance, rightDistance)
+                        minNoseTrailVariations = min(minNoseTrailVariations, noseTrailVariation)
+                        maxNoseTrailVariations = max(maxNoseTrailVariations, noseTrailVariation)
                     })
                     .aspectRatio(3/4, contentMode: .fit)
                     .frame(maxWidth: .infinity)
@@ -81,6 +95,7 @@ struct ContentView: View {
                     VStack(alignment: .leading, spacing: 10) {
                         DistanceView(label: "Distance", color: Color.purple, current: leftNoseDistance, min: minLeftNoseDistance, max: maxLeftNoseDistance)
                         DistanceView(label: "Distance", color: Color.orange, current: rightNoseDistance, min: minRightNoseDistance, max: maxRightNoseDistance)
+                        DistanceView(label: "Variation", color: Color.blue, current: noseTrailVariation, min: minNoseTrailVariations, max: maxNoseTrailVariations)
                     }
 //                    .padding()
                     
@@ -133,6 +148,26 @@ struct ContentView: View {
         if trail.count > 10 {
             trail.removeFirst()
         }
+
+        // Bereken de variatie voor de neus
+        if trail == noseTrail {
+            noseTrailVariation = calculateNoseVariation(trail)
+            // Update de minimum- en maximumvariaties
+            minNoseTrailVariations = min(minNoseTrailVariations, noseTrailVariation)
+            maxNoseTrailVariations = max(maxNoseTrailVariations, noseTrailVariation)
+        }
+    }
+
+    private func calculateNoseVariation(_ trail: [CGPoint]) -> CGFloat {
+        guard trail.count > 1 else { return 0.0 }
+
+        var totalDistance: CGFloat = 0.0
+        for i in 1..<trail.count {
+            let distance = hypot(trail[i].x - trail[i-1].x, trail[i].y - trail[i-1].y)
+            totalDistance += distance
+        }
+
+        return totalDistance
     }
 }
 
