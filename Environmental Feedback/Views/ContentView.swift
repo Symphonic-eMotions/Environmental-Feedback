@@ -21,11 +21,11 @@ struct ContentView: View {
     @State private var rightNoseDistance: CGFloat = 0.0
     @State private var noseTrailVariation: CGFloat = 0.0
     
-    @State private var minLeftNoseDistance: CGFloat = .greatestFiniteMagnitude
+    @State private var minLeftNoseDistance: CGFloat = 999
     @State private var maxLeftNoseDistance: CGFloat = 0.0
-    @State private var minRightNoseDistance: CGFloat = .greatestFiniteMagnitude
+    @State private var minRightNoseDistance: CGFloat = 999
     @State private var maxRightNoseDistance: CGFloat = 0.0
-    @State private var minNoseTrailVariations: CGFloat = .greatestFiniteMagnitude
+    @State private var minNoseTrailVariations: CGFloat = 999
     @State private var maxNoseTrailVariations: CGFloat = 0.0
     
     @State private var leftEarPoint: CGPoint = .zero
@@ -127,6 +127,23 @@ struct ContentView: View {
                             .opacity(Double(noseTrail.count - index) / Double(noseTrail.count)) // Fade effect
                             .animation(.easeOut(duration: 0.5), value: noseTrail) // Smooth transition
                     }
+                    
+                    // Reset button at the bottom
+                    VStack {
+                        Spacer() // Pushes the button to the bottom
+                        HStack {
+                            Spacer() // Center horizontally
+                            Button(action: {
+                                resetMinMaxValues()
+                            }) {
+                                Image(systemName: "gobackward")
+                                    .padding()
+                                    .background(Color.white.opacity(0.7))
+                                    .clipShape(Circle())
+                            }
+                        }
+                        .padding(.bottom, 20) // Padding from the bottom edge
+                    }
                 }
             }
         }
@@ -168,6 +185,18 @@ struct ContentView: View {
         }
 
         return totalDistance
+    }
+    
+    private func resetMinMaxValues() {
+        // Reset de minimum- en maximumwaarden naar de huidige waarden om onrealistisch grote waarden te vermijden
+        minLeftNoseDistance = leftNoseDistance
+        maxLeftNoseDistance = leftNoseDistance
+        
+        minRightNoseDistance = rightNoseDistance
+        maxRightNoseDistance = rightNoseDistance
+        
+        minNoseTrailVariations = noseTrailVariation
+        maxNoseTrailVariations = noseTrailVariation
     }
 }
 
