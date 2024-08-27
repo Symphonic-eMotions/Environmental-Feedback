@@ -9,12 +9,6 @@ import SwiftUI
 
 @main
 struct Environmental_FeedbackApp: App {
-    
-//    init() {
-//        // Schakel automatisch vergrendelen van het scherm uit
-//        UIApplication.shared.isIdleTimerDisabled = true
-//    }
-    
     var body: some Scene {
         WindowGroup {
             ContentView()

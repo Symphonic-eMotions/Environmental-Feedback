@@ -19,25 +19,21 @@ struct DistanceView: View {
         HStack {
             Text("\(label):")
                 .foregroundColor(color)
-                .frame(width: 90)
+                .frame(width: 90, alignment: .leading)
             Text("\(formatDistance(current))")
                 .foregroundColor(color)
-                .frame(width: 40)
+                .frame(width: 40, alignment: .trailing)
             Text("\(formatDistance(min))")
                 .foregroundColor(.green)
-                .frame(width: 90)
-//            if !isCalibrating {
-//                Stepper("", value: $min, in: 0...max, step: 1)
-//                    .labelsHidden()
-//                    .frame(width: 150)
-//                    .overlay(
-//                        Text("\(formatDistance(min))")
-//                            .foregroundColor(.green)
-//                    )
-//            }
+                .frame(width: 90, alignment: .trailing)
+            if !isCalibrating {
+                Stepper("", value: $min, in: 0...max, step: 1)
+                    .labelsHidden()
+                    .frame(width: 90)
+            }
             Text("\(formatDistance(max))")
                 .foregroundColor(.red)
-                .frame(width: 90)
+                .frame(width: 90, alignment: .trailing)
         }
         .padding(5)
         .background(Color.black.opacity(0.7))

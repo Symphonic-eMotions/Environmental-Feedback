@@ -17,22 +17,11 @@ struct TransportView: View {
     var body: some View {
         
         HStack(spacing: 20) {
-                        
-            if isCalibrating {
-                Button(action: {
-                    noseData.resetMinMaxValues()
-                }) {
-                    Image(systemName: "gobackward")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 50, height: 50)
-                        .foregroundColor(.gray)
-                        
-                }
-            }
-
             Button(action: {
                 isCalibrating.toggle()
+                if isCalibrating {
+                    noseData.resetMinMaxValues()
+                }
             }) {
                 Circle()
                     .fill(isCalibrating ? Color.red : Color.white)

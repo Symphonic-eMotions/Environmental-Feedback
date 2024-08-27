@@ -26,7 +26,6 @@ struct CameraViewWrapper: View {
         .aspectRatio(3/4, contentMode: .fit)
         .frame(maxWidth: .infinity)
         .background(Color.gray.opacity(0.1))
-        .padding()
     }
     
     private func updateTrail(_ trail: inout [CGPoint], with newPoint: CGPoint) {

@@ -13,19 +13,6 @@ struct DistanceViewCollection: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            // Header Row
-            HStack {
-                Spacer().frame(width: 120) // Lege ruimte om uitlijning met labels te behouden
-                Text("Min")
-                    .frame(width: 150)
-                    .foregroundColor(.green)
-                Text("Max")
-                    .frame(width: 90)
-                    .foregroundColor(.red)
-            }
-            .padding(5)
-            .background(Color.black.opacity(0.7))
-            .cornerRadius(5)
             
             // Distance Rows
             DistanceView(
@@ -53,5 +40,6 @@ struct DistanceViewCollection: View {
                 isCalibrating: isCalibrating
             )
         }
+        .padding()
     }
 }
