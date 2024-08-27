@@ -10,10 +10,36 @@ import SwiftUI
 struct TransportView: View {
     
     @ObservedObject var audioManager: AudioManager
+    @ObservedObject var noseData: NoseData
     @Binding var isEngineRunning: Bool
+    @Binding var isCalibrating: Bool
     
     var body: some View {
+        
         HStack(spacing: 20) {
+                        
+            if isCalibrating {
+                Button(action: {
+                    noseData.resetMinMaxValues()
+                }) {
+                    Image(systemName: "gobackward")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 50, height: 50)
+                        .foregroundColor(.gray)
+                        
+                }
+            }
+
+            Button(action: {
+                isCalibrating.toggle()
+            }) {
+                Circle()
+                    .fill(isCalibrating ? Color.red : Color.white)
+                    .frame(width: 50, height: 50)
+                    .overlay(Circle().stroke(Color.black, lineWidth: 2))
+            }
+            
             Button(action: {
                 if isEngineRunning {
                     audioManager.stopEngine()

@@ -11,8 +11,9 @@ struct DistanceView: View {
     var label: String
     var color: Color
     var current: CGFloat
-    var min: CGFloat
+    @Binding var min: CGFloat
     var max: CGFloat
+    var isCalibrating: Bool
     
     var body: some View {
         HStack {
@@ -22,10 +23,19 @@ struct DistanceView: View {
             Text("\(formatDistance(current))")
                 .foregroundColor(color)
                 .frame(width: 40)
-            Text("Min: \(formatDistance(min))")
+            Text("\(formatDistance(min))")
                 .foregroundColor(.green)
                 .frame(width: 90)
-            Text("Max: \(formatDistance(max))")
+//            if !isCalibrating {
+//                Stepper("", value: $min, in: 0...max, step: 1)
+//                    .labelsHidden()
+//                    .frame(width: 150)
+//                    .overlay(
+//                        Text("\(formatDistance(min))")
+//                            .foregroundColor(.green)
+//                    )
+//            }
+            Text("\(formatDistance(max))")
                 .foregroundColor(.red)
                 .frame(width: 90)
         }

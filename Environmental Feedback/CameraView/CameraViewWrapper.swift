@@ -8,6 +8,7 @@ import SwiftUI
 
 struct CameraViewWrapper: View {
     @ObservedObject var noseData: NoseData
+    @Binding var isCalibrating: Bool
     
     var body: some View {
         CameraView(earDistanceHandler: { _ in
@@ -49,12 +50,15 @@ struct CameraViewWrapper: View {
         }
         noseData.noseTrailVariation = noseData.noseTrail.count > 1 ? totalDistance / CGFloat(noseData.noseTrail.count - 1) : 0.0
         
-        noseData.minLeftNoseDistance = min(noseData.minLeftNoseDistance, leftDistance)
-        noseData.maxLeftNoseDistance = max(noseData.maxLeftNoseDistance, leftDistance)
-        noseData.minRightNoseDistance = min(noseData.minRightNoseDistance, rightDistance)
-        noseData.maxRightNoseDistance = max(noseData.maxRightNoseDistance, rightDistance)
-        noseData.minNoseTrailVariations = min(noseData.minNoseTrailVariations, noseData.noseTrailVariation)
-        noseData.maxNoseTrailVariations = max(noseData.maxNoseTrailVariations, noseData.noseTrailVariation)
+        // Update min and max values only if DistanceViews is showing
+        if isCalibrating {
+            noseData.minLeftNoseDistance = min(noseData.minLeftNoseDistance, leftDistance)
+            noseData.maxLeftNoseDistance = max(noseData.maxLeftNoseDistance, leftDistance)
+            noseData.minRightNoseDistance = min(noseData.minRightNoseDistance, rightDistance)
+            noseData.maxRightNoseDistance = max(noseData.maxRightNoseDistance, rightDistance)
+            noseData.minNoseTrailVariations = min(noseData.minNoseTrailVariations, noseData.noseTrailVariation)
+            noseData.maxNoseTrailVariations = max(noseData.maxNoseTrailVariations, noseData.noseTrailVariation)
+        }
     }
 }
 

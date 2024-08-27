@@ -17,24 +17,26 @@ struct ContentView: View {
     @State private var isEngineRunning = false
     @State private var currentPosition: Double = 0.0
     @StateObject private var noseData = NoseData()
+    @State private var isCalibrating = true
     
     var body: some View {
-        VStack(spacing: 20) {
-            TransportView(
-                audioManager: audioManager,
-                isEngineRunning: $isEngineRunning
-            )
-            
+        VStack(spacing: 0) {
             ScrollView {
                 RecordLooperView(audioManager: audioManager)
                 
                 ZStack(alignment: .topLeading) {
-                    CameraViewWrapper(noseData: noseData)
-                    DistanceViews(noseData: noseData)
+                    CameraViewWrapper(noseData: noseData, isCalibrating: $isCalibrating)
+                    DistanceViewCollection(noseData: noseData, isCalibrating: $isCalibrating)
+                    MeterView(noseData: noseData)
                     FaceLandmarkTrailView(noseData: noseData)
-                    ResetButton(noseData: noseData)
                 }
             }
+            TransportView(
+                audioManager: audioManager,
+                noseData: noseData,
+                isEngineRunning: $isEngineRunning,
+                isCalibrating: $isCalibrating
+            )
         }
         .padding(.vertical)
         .onAppear {

@@ -46,14 +46,22 @@ final class CameraViewController: UIViewController {
                     DispatchQueue.main.async {
                         self.cameraView.previewLayer.session = self.cameraFeedSession
                         self.cameraView.previewLayer.videoGravity = .resizeAspectFill
+                        self.cameraFeedSession?.startRunning()
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        self.cameraFeedSession?.startRunning()
                     }
                 }
-                self.cameraFeedSession?.startRunning()
             } catch {
-                print(error.localizedDescription)
+                DispatchQueue.main.async {
+                    // handle error, e.g., show an alert
+                    print(error.localizedDescription)
+                }
             }
         }
     }
+
 
     override func viewWillDisappear(_ animated: Bool) {
         cameraFeedSession?.stopRunning()

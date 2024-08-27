@@ -16,9 +16,9 @@
 		7C8B6A742C7B6B3400B14E3E /* DistanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8B6A732C7B6B3400B14E3E /* DistanceView.swift */; };
 		7C8B6A792C7D1B2A00B14E3E /* NoseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8B6A782C7D1B2A00B14E3E /* NoseData.swift */; };
 		7C8B6A7B2C7D1BE300B14E3E /* CameraViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8B6A7A2C7D1BE300B14E3E /* CameraViewWrapper.swift */; };
-		7C8B6A7D2C7D1C0C00B14E3E /* DistanceViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8B6A7C2C7D1C0C00B14E3E /* DistanceViews.swift */; };
+		7C8B6A7D2C7D1C0C00B14E3E /* DistanceViewCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8B6A7C2C7D1C0C00B14E3E /* DistanceViewCollection.swift */; };
 		7C8B6A7F2C7D1C2600B14E3E /* FaceLandmarkTrailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8B6A7E2C7D1C2600B14E3E /* FaceLandmarkTrailView.swift */; };
-		7C8B6A812C7D1C5800B14E3E /* ResetButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8B6A802C7D1C5800B14E3E /* ResetButton.swift */; };
+		7C8B6A832C7DA0C500B14E3E /* MeterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8B6A822C7DA0C500B14E3E /* MeterView.swift */; };
 		7C949D6E2C7A293000CB17BA /* EarTrackingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C949D6D2C7A293000CB17BA /* EarTrackingView.swift */; };
 		7C949D712C7A297400CB17BA /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C949D702C7A297400CB17BA /* CameraViewController.swift */; };
 		7C949D732C7A4B4700CB17BA /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C949D722C7A4B4700CB17BA /* CameraView.swift */; };
@@ -43,9 +43,9 @@
 		7C8B6A732C7B6B3400B14E3E /* DistanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistanceView.swift; sourceTree = "<group>"; };
 		7C8B6A782C7D1B2A00B14E3E /* NoseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoseData.swift; sourceTree = "<group>"; };
 		7C8B6A7A2C7D1BE300B14E3E /* CameraViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewWrapper.swift; sourceTree = "<group>"; };
-		7C8B6A7C2C7D1C0C00B14E3E /* DistanceViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistanceViews.swift; sourceTree = "<group>"; };
+		7C8B6A7C2C7D1C0C00B14E3E /* DistanceViewCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistanceViewCollection.swift; sourceTree = "<group>"; };
 		7C8B6A7E2C7D1C2600B14E3E /* FaceLandmarkTrailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceLandmarkTrailView.swift; sourceTree = "<group>"; };
-		7C8B6A802C7D1C5800B14E3E /* ResetButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetButton.swift; sourceTree = "<group>"; };
+		7C8B6A822C7DA0C500B14E3E /* MeterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeterView.swift; sourceTree = "<group>"; };
 		7C949D6D2C7A293000CB17BA /* EarTrackingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarTrackingView.swift; sourceTree = "<group>"; };
 		7C949D702C7A297400CB17BA /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		7C949D722C7A4B4700CB17BA /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
@@ -134,6 +134,7 @@
 		7C949D742C7A4B5500CB17BA /* CameraView */ = {
 			isa = PBXGroup;
 			children = (
+				7C8B6A7A2C7D1BE300B14E3E /* CameraViewWrapper.swift */,
 				7C949D722C7A4B4700CB17BA /* CameraView.swift */,
 				7C949D702C7A297400CB17BA /* CameraViewController.swift */,
 				7C949D752C7A4BF700CB17BA /* CameraPreview.swift */,
@@ -159,11 +160,10 @@
 				7CD1CB7F2C6F598300887861 /* BufferView.swift */,
 				7CD1CB812C6FA04C00887861 /* MultiSliderView.swift */,
 				7C949D6D2C7A293000CB17BA /* EarTrackingView.swift */,
-				7C8B6A7C2C7D1C0C00B14E3E /* DistanceViews.swift */,
+				7C8B6A7C2C7D1C0C00B14E3E /* DistanceViewCollection.swift */,
 				7C8B6A732C7B6B3400B14E3E /* DistanceView.swift */,
-				7C8B6A7A2C7D1BE300B14E3E /* CameraViewWrapper.swift */,
 				7C8B6A7E2C7D1C2600B14E3E /* FaceLandmarkTrailView.swift */,
-				7C8B6A802C7D1C5800B14E3E /* ResetButton.swift */,
+				7C8B6A822C7DA0C500B14E3E /* MeterView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -252,6 +252,7 @@
 			files = (
 				7CD1CB7C2C6F4FF100887861 /* RecordLooperView.swift in Sources */,
 				7C949D712C7A297400CB17BA /* CameraViewController.swift in Sources */,
+				7C8B6A832C7DA0C500B14E3E /* MeterView.swift in Sources */,
 				7CD1CB822C6FA04C00887861 /* MultiSliderView.swift in Sources */,
 				7CD1CB802C6F598300887861 /* BufferView.swift in Sources */,
 				7C8B6A792C7D1B2A00B14E3E /* NoseData.swift in Sources */,
@@ -261,13 +262,12 @@
 				7C205A4E2C5F626500646C10 /* Environmental_FeedbackApp.swift in Sources */,
 				7CD1CB702C688E0000887861 /* AudioManager.swift in Sources */,
 				7C949D732C7A4B4700CB17BA /* CameraView.swift in Sources */,
-				7C8B6A812C7D1C5800B14E3E /* ResetButton.swift in Sources */,
 				7C8B6A742C7B6B3400B14E3E /* DistanceView.swift in Sources */,
 				7CD1CB7E2C6F58A000887861 /* TransportView.swift in Sources */,
 				7C949D762C7A4BF700CB17BA /* CameraPreview.swift in Sources */,
 				7C8B6A7F2C7D1C2600B14E3E /* FaceLandmarkTrailView.swift in Sources */,
 				7C949D6E2C7A293000CB17BA /* EarTrackingView.swift in Sources */,
-				7C8B6A7D2C7D1C0C00B14E3E /* DistanceViews.swift in Sources */,
+				7C8B6A7D2C7D1C0C00B14E3E /* DistanceViewCollection.swift in Sources */,
 				7CD1CB782C69016300887861 /* FFTView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
