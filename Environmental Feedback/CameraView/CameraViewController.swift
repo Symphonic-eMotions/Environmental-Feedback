@@ -39,29 +39,32 @@ final class CameraViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
         DispatchQueue.global(qos: .background).async {
             do {
                 if self.cameraFeedSession == nil {
                     try self.setupAVSession()
+                    
+                    // Update UI on main thread
                     DispatchQueue.main.async {
                         self.cameraView.previewLayer.session = self.cameraFeedSession
                         self.cameraView.previewLayer.videoGravity = .resizeAspectFill
-                        self.cameraFeedSession?.startRunning()
                     }
+                    
+                    // Start running the session in the background
+                    self.cameraFeedSession?.startRunning()
                 } else {
-                    DispatchQueue.main.async {
-                        self.cameraFeedSession?.startRunning()
-                    }
+                    // Just start running the session in the background
+                    self.cameraFeedSession?.startRunning()
                 }
             } catch {
                 DispatchQueue.main.async {
-                    // handle error, e.g., show an alert
+                    // Handle error on the main thread, e.g., show an alert
                     print(error.localizedDescription)
                 }
             }
         }
     }
-
 
     override func viewWillDisappear(_ animated: Bool) {
         cameraFeedSession?.stopRunning()

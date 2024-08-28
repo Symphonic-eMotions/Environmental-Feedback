@@ -33,7 +33,7 @@ struct MeterColumnView: View {
             Spacer()
             Rectangle()
                 .fill(color)
-                .frame(width: 30, height: value * 200)
+                .frame(width: 30, height: max(0, value.isFinite ? value * 200 : 0))
                 .cornerRadius(5)
         }
     }
