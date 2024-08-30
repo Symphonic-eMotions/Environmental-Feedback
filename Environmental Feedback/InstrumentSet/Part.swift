@@ -49,39 +49,7 @@ extension InstrumentsSet.Track {
             self.dontDrawVisual = dontDrawVisual
             self.damperTarget = damperTarget
         }
-        
-        func indexes(for set: InstrumentsSet) -> [Index] {
-            var indexes: [Index] = []
-            for row in 0..<set.rows {
-                for column in 0..<set.columns {
-                    if areaOfInterest[row * set.columns + column] == 1 {
-                        indexes.append(Index(row: row, column: column))
-                    }
-                }
-            }
-            return indexes
-        }
-    
-        mutating private func set(indexes: [Index], for set: InstrumentsSet) {
-            var newAreaOfInterest: [Int] = Array(repeating: 0, count: set.rows * set.columns)
-            indexes.forEach {
-                newAreaOfInterest[$0.row * set.columns + $0.column] = 1
-            }
-            areaOfInterest = newAreaOfInterest
-        }
-        
-        mutating func toggleIndex(index: Index, in set: InstrumentsSet) {
-            var newIndexes = indexes(for: set)
-            if let index = newIndexes.firstIndex(where: { $0.column == index.column && $0.row == index.row }) {
-                newIndexes.remove(at: index)
-            }
-            else {
-                newIndexes.append(index)
-            }
-            self.set(indexes: newIndexes, for: set)
-        }
     }
-    
 }
 
 extension InstrumentsSet.Track.Part: Encodable{

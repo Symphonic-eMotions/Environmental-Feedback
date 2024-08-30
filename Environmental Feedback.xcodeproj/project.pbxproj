@@ -66,6 +66,7 @@
 		7CF1AAE62C81362B005AF481 /* ValueAndRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF1AAE52C81362B005AF481 /* ValueAndRange.swift */; };
 		7CF1AAE82C813654005AF481 /* RangeConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF1AAE72C813654005AF481 /* RangeConverter.swift */; };
 		7CF1AAEA2C8223FA005AF481 /* CodableColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF1AAE92C8223FA005AF481 /* CodableColor.swift */; };
+		7CF1AAED2C82272A005AF481 /* Sets in Resources */ = {isa = PBXBuildFile; fileRef = 7CF1AAEC2C82272A005AF481 /* Sets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -125,6 +126,7 @@
 		7CF1AAE52C81362B005AF481 /* ValueAndRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueAndRange.swift; sourceTree = "<group>"; };
 		7CF1AAE72C813654005AF481 /* RangeConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangeConverter.swift; sourceTree = "<group>"; };
 		7CF1AAE92C8223FA005AF481 /* CodableColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableColor.swift; sourceTree = "<group>"; };
+		7CF1AAEC2C82272A005AF481 /* Sets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Sets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,15 +164,16 @@
 		7C205A4C2C5F626500646C10 /* Environmental Feedback */ = {
 			isa = PBXGroup;
 			children = (
+				7CF1AAEC2C82272A005AF481 /* Sets */,
+				7C205A602C5F668400646C10 /* AudioProcessing */,
 				7CF1AAA12C81179E005AF481 /* Conductor */,
 				7CF1AAAE2C811A05005AF481 /* InstrumentSet */,
-				7CD1CB892C71FC2900887861 /* Environmental-Feedback-Info.plist */,
-				7C205A4D2C5F626500646C10 /* Environmental_FeedbackApp.swift */,
 				7CD1CB712C6896B500887861 /* Views */,
 				7C949D742C7A4B5500CB17BA /* CameraView */,
 				7C8B6A772C7D1B0D00B14E3E /* Vision */,
-				7C205A602C5F668400646C10 /* AudioProcessing */,
 				7C949D772C7A4C6400CB17BA /* Supporting Files */,
+				7CD1CB892C71FC2900887861 /* Environmental-Feedback-Info.plist */,
+				7C205A4D2C5F626500646C10 /* Environmental_FeedbackApp.swift */,
 				7C205A512C5F626700646C10 /* Assets.xcassets */,
 				7C205A532C5F626700646C10 /* Preview Content */,
 			);
@@ -366,6 +369,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7C205A552C5F626700646C10 /* Preview Assets.xcassets in Resources */,
+				7CF1AAED2C82272A005AF481 /* Sets in Resources */,
 				7C205A522C5F626700646C10 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

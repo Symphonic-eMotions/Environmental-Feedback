@@ -9,6 +9,9 @@ import SwiftUI
 
 @main
 struct Environmental_FeedbackApp: App {
+    
+    let instrumentSet = AppUtils.loadInstrumentSet(json: "Introductie.json")
+    
     var body: some Scene {
         WindowGroup {
             ContentView()

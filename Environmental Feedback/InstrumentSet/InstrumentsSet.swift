@@ -107,8 +107,6 @@ struct InstrumentsSet: Identifiable, Decodable {
         case skin
         case timeSignature = "setTimeSignature"
         case masterTrackEffects
-        case rows = "gridRows"
-        case columns = "gridColumns"
         case levels = "levelDurations"
         case levelSpeedSet
         case levelDifficultySet
@@ -130,9 +128,6 @@ struct InstrumentsSet: Identifiable, Decodable {
     let timeSignature: Int
     //Master effect rack group
     let masterTrackEffects: [Track.Effect]
-    //The row and colums used in imageDifference
-    internal let rows: Int
-    internal let columns: Int
     //Level duration keeps the amount of levels with an int
     //Duration could be refectored to aditional level speed per level
     let levels: [Int]
@@ -156,8 +151,6 @@ struct InstrumentsSet: Identifiable, Decodable {
         timeSignature = try container.decode(Int.self, forKey: .timeSignature)
         let masterTrackEffectsRaw = try container.decode([Track.Effect].self, forKey: .masterTrackEffects)
         masterTrackEffects = masterTrackEffectsRaw
-        rows = try container.decode(Int.self, forKey: .rows)
-        columns = try container.decode(Int.self, forKey: .columns)
         levels = try container.decode([Int].self, forKey: .levels)
         levelSpeedSet = try container.decodeIfPresent(Double.self, forKey: .levelSpeedSet) ?? 0.5
         levelDifficultySet = try container.decodeIfPresent(Double.self, forKey: .levelDifficultySet) ?? 0.5
@@ -178,8 +171,6 @@ struct InstrumentsSet: Identifiable, Decodable {
         hasTempo: Bool,
         timeSignature: Int,
         masterTrackEffects: [Track.Effect],
-        rows: Int,
-        columns: Int,
         levels: [Int],
         levelSpeedSet: Double,
         levelDifficultySet: Double,
@@ -198,9 +189,6 @@ struct InstrumentsSet: Identifiable, Decodable {
         self.timeSignature = timeSignature
         //TODO: new values from state object
         self.masterTrackEffects = masterTrackEffects
-        
-        self.rows = rows
-        self.columns = columns
         self.levels = levels
         self.levelSpeedSet = levelSpeedSet
         self.levelDifficultySet = levelDifficultySet
@@ -247,8 +235,6 @@ extension InstrumentsSet: Encodable {
         try container.encode(hasTempo, forKey: .hasTempo)
         try container.encode(timeSignature, forKey: .timeSignature)
         try container.encode(masterTrackEffects, forKey: .masterTrackEffects)
-        try container.encode(rows, forKey: .rows)
-        try container.encode(columns, forKey: .columns)
         try container.encode(levels, forKey: .levels)
         try container.encode(levelSpeedSet, forKey: .levelSpeedSet)
         try container.encode(levelDifficultySet, forKey: .levelDifficultySet)

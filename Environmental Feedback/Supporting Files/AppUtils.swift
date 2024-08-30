@@ -9,6 +9,19 @@ import AVFAudio
 
 final class AppUtils {
     
+    //MARK: Instrument Set Loading
+    static func loadInstrumentSet(json: String) -> InstrumentsSet {
+        
+        guard let instrumentSet = InstrumentsSet.withJSON(json) else {
+            
+            print("Error loading instrument set from JSON: \(json)")
+            
+            //The name "No Set" is used to prevent loading
+            return InstrumentsSet(name: "No Set", customName: "", published: false, semVersion: "1.0.0", filesPath: "", imagePrefix: "", userViews: [.playView], bpm: 120, hasTempo: true, timeSignature: 4, masterTrackEffects: [], levels: [0], levelSpeedSet: 0.5, levelDifficultySet: 0.5, setEffects: [], tracks: [])
+        }
+        return instrumentSet
+    }
+    
     //MARK: crate folder for track recording
     static func createAvAudioFile (
         set: InstrumentsSet,
