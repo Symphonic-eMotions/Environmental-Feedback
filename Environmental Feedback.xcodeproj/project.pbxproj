@@ -32,6 +32,40 @@
 		7CD1CB802C6F598300887861 /* BufferView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD1CB7F2C6F598300887861 /* BufferView.swift */; };
 		7CD1CB822C6FA04C00887861 /* MultiSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD1CB812C6FA04C00887861 /* MultiSliderView.swift */; };
 		7CD1CB882C70971D00887861 /* SoundpipeAudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7CD1CB872C70971D00887861 /* SoundpipeAudioKit */; };
+		7CF1AAA32C8117C2005AF481 /* Conductor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF1AAA22C8117C2005AF481 /* Conductor.swift */; };
+		7CF1AAAF2C811A05005AF481 /* DamperTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF1AAA62C811A05005AF481 /* DamperTarget.swift */; };
+		7CF1AAB02C811A05005AF481 /* Effect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF1AAA72C811A05005AF481 /* Effect.swift */; };
+		7CF1AAB12C811A05005AF481 /* InstrumentsSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF1AAA82C811A05005AF481 /* InstrumentsSet.swift */; };
+		7CF1AAB22C811A05005AF481 /* MidiFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF1AAA92C811A05005AF481 /* MidiFiles.swift */; };
+		7CF1AAB32C811A05005AF481 /* Part.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF1AAAA2C811A05005AF481 /* Part.swift */; };
+		7CF1AAB42C811A05005AF481 /* SetEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF1AAAB2C811A05005AF481 /* SetEffect.swift */; };
+		7CF1AAB52C811A05005AF481 /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF1AAAC2C811A05005AF481 /* Track.swift */; };
+		7CF1AAB62C811A05005AF481 /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF1AAAD2C811A05005AF481 /* UserView.swift */; };
+		7CF1AAB82C812300005AF481 /* midiSequencerBuffersAndSamplersWithNestedEffects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF1AAB72C812300005AF481 /* midiSequencerBuffersAndSamplersWithNestedEffects.swift */; };
+		7CF1AABA2C812394005AF481 /* createAudioBufferSamplerChainEffects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF1AAB92C812394005AF481 /* createAudioBufferSamplerChainEffects.swift */; };
+		7CF1AABC2C813027005AF481 /* midiNoteNumberFromFileName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF1AABB2C813027005AF481 /* midiNoteNumberFromFileName.swift */; };
+		7CF1AABE2C813066005AF481 /* lengthInBeatsFromFileName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF1AABD2C813066005AF481 /* lengthInBeatsFromFileName.swift */; };
+		7CF1AAC02C8130AC005AF481 /* AppUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF1AABF2C8130AC005AF481 /* AppUtils.swift */; };
+		7CF1AAD22C813502005AF481 /* BandPassFilterEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF1AAC12C813502005AF481 /* BandPassFilterEffect.swift */; };
+		7CF1AAD32C813502005AF481 /* CompressorEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF1AAC22C813502005AF481 /* CompressorEffect.swift */; };
+		7CF1AAD42C813502005AF481 /* CostelloReverbEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF1AAC32C813502005AF481 /* CostelloReverbEffect.swift */; };
+		7CF1AAD52C813502005AF481 /* DelayEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF1AAC42C813502005AF481 /* DelayEffect.swift */; };
+		7CF1AAD62C813502005AF481 /* DistortionEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF1AAC52C813502005AF481 /* DistortionEffect.swift */; };
+		7CF1AAD72C813502005AF481 /* DynamicRangeCompressorEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF1AAC62C813502005AF481 /* DynamicRangeCompressorEffect.swift */; };
+		7CF1AAD82C813502005AF481 /* ExpanderEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF1AAC72C813502005AF481 /* ExpanderEffect.swift */; };
+		7CF1AAD92C813502005AF481 /* HighPassFilterEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF1AAC82C813502005AF481 /* HighPassFilterEffect.swift */; };
+		7CF1AADA2C813502005AF481 /* LowPassFilterEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF1AAC92C813502005AF481 /* LowPassFilterEffect.swift */; };
+		7CF1AADB2C813502005AF481 /* MixerEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF1AACA2C813502005AF481 /* MixerEffect.swift */; };
+		7CF1AADC2C813502005AF481 /* NoneEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF1AACB2C813502005AF481 /* NoneEffect.swift */; };
+		7CF1AADD2C813502005AF481 /* PeakingParametricEqualizerFilterEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF1AACC2C813502005AF481 /* PeakingParametricEqualizerFilterEffect.swift */; };
+		7CF1AADE2C813502005AF481 /* PhaserEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF1AACD2C813502005AF481 /* PhaserEffect.swift */; };
+		7CF1AADF2C813502005AF481 /* ResponseReverbEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF1AACE2C813502005AF481 /* ResponseReverbEffect.swift */; };
+		7CF1AAE02C813502005AF481 /* ReverbEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF1AACF2C813502005AF481 /* ReverbEffect.swift */; };
+		7CF1AAE12C813502005AF481 /* TanhDistortionEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF1AAD02C813502005AF481 /* TanhDistortionEffect.swift */; };
+		7CF1AAE42C81353D005AF481 /* SporthAudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7CF1AAE32C81353D005AF481 /* SporthAudioKit */; };
+		7CF1AAE62C81362B005AF481 /* ValueAndRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF1AAE52C81362B005AF481 /* ValueAndRange.swift */; };
+		7CF1AAE82C813654005AF481 /* RangeConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF1AAE72C813654005AF481 /* RangeConverter.swift */; };
+		7CF1AAEA2C8223FA005AF481 /* CodableColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF1AAE92C8223FA005AF481 /* CodableColor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +92,39 @@
 		7CD1CB7F2C6F598300887861 /* BufferView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferView.swift; sourceTree = "<group>"; };
 		7CD1CB812C6FA04C00887861 /* MultiSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiSliderView.swift; sourceTree = "<group>"; };
 		7CD1CB892C71FC2900887861 /* Environmental-Feedback-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Environmental-Feedback-Info.plist"; sourceTree = SOURCE_ROOT; };
+		7CF1AAA22C8117C2005AF481 /* Conductor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conductor.swift; sourceTree = "<group>"; };
+		7CF1AAA62C811A05005AF481 /* DamperTarget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DamperTarget.swift; sourceTree = "<group>"; };
+		7CF1AAA72C811A05005AF481 /* Effect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Effect.swift; sourceTree = "<group>"; };
+		7CF1AAA82C811A05005AF481 /* InstrumentsSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstrumentsSet.swift; sourceTree = "<group>"; };
+		7CF1AAA92C811A05005AF481 /* MidiFiles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MidiFiles.swift; sourceTree = "<group>"; };
+		7CF1AAAA2C811A05005AF481 /* Part.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Part.swift; sourceTree = "<group>"; };
+		7CF1AAAB2C811A05005AF481 /* SetEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetEffect.swift; sourceTree = "<group>"; };
+		7CF1AAAC2C811A05005AF481 /* Track.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
+		7CF1AAAD2C811A05005AF481 /* UserView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
+		7CF1AAB72C812300005AF481 /* midiSequencerBuffersAndSamplersWithNestedEffects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = midiSequencerBuffersAndSamplersWithNestedEffects.swift; sourceTree = "<group>"; };
+		7CF1AAB92C812394005AF481 /* createAudioBufferSamplerChainEffects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = createAudioBufferSamplerChainEffects.swift; sourceTree = "<group>"; };
+		7CF1AABB2C813027005AF481 /* midiNoteNumberFromFileName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = midiNoteNumberFromFileName.swift; sourceTree = "<group>"; };
+		7CF1AABD2C813066005AF481 /* lengthInBeatsFromFileName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = lengthInBeatsFromFileName.swift; sourceTree = "<group>"; };
+		7CF1AABF2C8130AC005AF481 /* AppUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUtils.swift; sourceTree = "<group>"; };
+		7CF1AAC12C813502005AF481 /* BandPassFilterEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BandPassFilterEffect.swift; sourceTree = "<group>"; };
+		7CF1AAC22C813502005AF481 /* CompressorEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompressorEffect.swift; sourceTree = "<group>"; };
+		7CF1AAC32C813502005AF481 /* CostelloReverbEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CostelloReverbEffect.swift; sourceTree = "<group>"; };
+		7CF1AAC42C813502005AF481 /* DelayEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DelayEffect.swift; sourceTree = "<group>"; };
+		7CF1AAC52C813502005AF481 /* DistortionEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DistortionEffect.swift; sourceTree = "<group>"; };
+		7CF1AAC62C813502005AF481 /* DynamicRangeCompressorEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicRangeCompressorEffect.swift; sourceTree = "<group>"; };
+		7CF1AAC72C813502005AF481 /* ExpanderEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpanderEffect.swift; sourceTree = "<group>"; };
+		7CF1AAC82C813502005AF481 /* HighPassFilterEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HighPassFilterEffect.swift; sourceTree = "<group>"; };
+		7CF1AAC92C813502005AF481 /* LowPassFilterEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LowPassFilterEffect.swift; sourceTree = "<group>"; };
+		7CF1AACA2C813502005AF481 /* MixerEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MixerEffect.swift; sourceTree = "<group>"; };
+		7CF1AACB2C813502005AF481 /* NoneEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoneEffect.swift; sourceTree = "<group>"; };
+		7CF1AACC2C813502005AF481 /* PeakingParametricEqualizerFilterEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeakingParametricEqualizerFilterEffect.swift; sourceTree = "<group>"; };
+		7CF1AACD2C813502005AF481 /* PhaserEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhaserEffect.swift; sourceTree = "<group>"; };
+		7CF1AACE2C813502005AF481 /* ResponseReverbEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseReverbEffect.swift; sourceTree = "<group>"; };
+		7CF1AACF2C813502005AF481 /* ReverbEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReverbEffect.swift; sourceTree = "<group>"; };
+		7CF1AAD02C813502005AF481 /* TanhDistortionEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TanhDistortionEffect.swift; sourceTree = "<group>"; };
+		7CF1AAE52C81362B005AF481 /* ValueAndRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValueAndRange.swift; sourceTree = "<group>"; };
+		7CF1AAE72C813654005AF481 /* RangeConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangeConverter.swift; sourceTree = "<group>"; };
+		7CF1AAE92C8223FA005AF481 /* CodableColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableColor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +132,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7CF1AAE42C81353D005AF481 /* SporthAudioKit in Frameworks */,
 				7CD1CB762C68BA5500887861 /* AudioKitEX in Frameworks */,
 				7C4FEBBE2C64C382000E2865 /* AudioKitUI in Frameworks */,
 				7CD1CB882C70971D00887861 /* SoundpipeAudioKit in Frameworks */,
@@ -94,6 +162,8 @@
 		7C205A4C2C5F626500646C10 /* Environmental Feedback */ = {
 			isa = PBXGroup;
 			children = (
+				7CF1AAA12C81179E005AF481 /* Conductor */,
+				7CF1AAAE2C811A05005AF481 /* InstrumentSet */,
 				7CD1CB892C71FC2900887861 /* Environmental-Feedback-Info.plist */,
 				7C205A4D2C5F626500646C10 /* Environmental_FeedbackApp.swift */,
 				7CD1CB712C6896B500887861 /* Views */,
@@ -146,6 +216,10 @@
 			isa = PBXGroup;
 			children = (
 				7C949D782C7A4C7A00CB17BA /* AppError.swift */,
+				7CF1AABF2C8130AC005AF481 /* AppUtils.swift */,
+				7CF1AAE52C81362B005AF481 /* ValueAndRange.swift */,
+				7CF1AAE72C813654005AF481 /* RangeConverter.swift */,
+				7CF1AAE92C8223FA005AF481 /* CodableColor.swift */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -166,6 +240,57 @@
 				7C8B6A822C7DA0C500B14E3E /* MeterView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		7CF1AAA12C81179E005AF481 /* Conductor */ = {
+			isa = PBXGroup;
+			children = (
+				7CF1AAA22C8117C2005AF481 /* Conductor.swift */,
+				7CF1AAB72C812300005AF481 /* midiSequencerBuffersAndSamplersWithNestedEffects.swift */,
+				7CF1AAB92C812394005AF481 /* createAudioBufferSamplerChainEffects.swift */,
+				7CF1AABB2C813027005AF481 /* midiNoteNumberFromFileName.swift */,
+				7CF1AABD2C813066005AF481 /* lengthInBeatsFromFileName.swift */,
+				7CF1AAD12C813502005AF481 /* Effects */,
+			);
+			path = Conductor;
+			sourceTree = "<group>";
+		};
+		7CF1AAAE2C811A05005AF481 /* InstrumentSet */ = {
+			isa = PBXGroup;
+			children = (
+				7CF1AAA82C811A05005AF481 /* InstrumentsSet.swift */,
+				7CF1AAA62C811A05005AF481 /* DamperTarget.swift */,
+				7CF1AAA72C811A05005AF481 /* Effect.swift */,
+				7CF1AAA92C811A05005AF481 /* MidiFiles.swift */,
+				7CF1AAAA2C811A05005AF481 /* Part.swift */,
+				7CF1AAAB2C811A05005AF481 /* SetEffect.swift */,
+				7CF1AAAC2C811A05005AF481 /* Track.swift */,
+				7CF1AAAD2C811A05005AF481 /* UserView.swift */,
+			);
+			path = InstrumentSet;
+			sourceTree = "<group>";
+		};
+		7CF1AAD12C813502005AF481 /* Effects */ = {
+			isa = PBXGroup;
+			children = (
+				7CF1AAC12C813502005AF481 /* BandPassFilterEffect.swift */,
+				7CF1AAC22C813502005AF481 /* CompressorEffect.swift */,
+				7CF1AAC32C813502005AF481 /* CostelloReverbEffect.swift */,
+				7CF1AAC42C813502005AF481 /* DelayEffect.swift */,
+				7CF1AAC52C813502005AF481 /* DistortionEffect.swift */,
+				7CF1AAC62C813502005AF481 /* DynamicRangeCompressorEffect.swift */,
+				7CF1AAC72C813502005AF481 /* ExpanderEffect.swift */,
+				7CF1AAC82C813502005AF481 /* HighPassFilterEffect.swift */,
+				7CF1AAC92C813502005AF481 /* LowPassFilterEffect.swift */,
+				7CF1AACA2C813502005AF481 /* MixerEffect.swift */,
+				7CF1AACB2C813502005AF481 /* NoneEffect.swift */,
+				7CF1AACC2C813502005AF481 /* PeakingParametricEqualizerFilterEffect.swift */,
+				7CF1AACD2C813502005AF481 /* PhaserEffect.swift */,
+				7CF1AACE2C813502005AF481 /* ResponseReverbEffect.swift */,
+				7CF1AACF2C813502005AF481 /* ReverbEffect.swift */,
+				7CF1AAD02C813502005AF481 /* TanhDistortionEffect.swift */,
+			);
+			path = Effects;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -189,6 +314,7 @@
 				7C4FEBBD2C64C382000E2865 /* AudioKitUI */,
 				7CD1CB752C68BA5500887861 /* AudioKitEX */,
 				7CD1CB872C70971D00887861 /* SoundpipeAudioKit */,
+				7CF1AAE32C81353D005AF481 /* SporthAudioKit */,
 			);
 			productName = "Environmental Feedback";
 			productReference = 7C205A4A2C5F626500646C10 /* Environmental Feedback.app */;
@@ -223,6 +349,7 @@
 				7C4FEBBC2C64C382000E2865 /* XCRemoteSwiftPackageReference "AudioKitUI" */,
 				7CD1CB742C68BA5500887861 /* XCRemoteSwiftPackageReference "AudioKitEX" */,
 				7CD1CB862C70971D00887861 /* XCRemoteSwiftPackageReference "SoundpipeAudioKit" */,
+				7CF1AAE22C81353D005AF481 /* XCRemoteSwiftPackageReference "SporthAudioKit" */,
 			);
 			productRefGroup = 7C205A4B2C5F626500646C10 /* Products */;
 			projectDirPath = "";
@@ -250,25 +377,58 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7CF1AAE02C813502005AF481 /* ReverbEffect.swift in Sources */,
 				7CD1CB7C2C6F4FF100887861 /* RecordLooperView.swift in Sources */,
 				7C949D712C7A297400CB17BA /* CameraViewController.swift in Sources */,
 				7C8B6A832C7DA0C500B14E3E /* MeterView.swift in Sources */,
 				7CD1CB822C6FA04C00887861 /* MultiSliderView.swift in Sources */,
+				7CF1AAAF2C811A05005AF481 /* DamperTarget.swift in Sources */,
+				7CF1AADB2C813502005AF481 /* MixerEffect.swift in Sources */,
+				7CF1AAD42C813502005AF481 /* CostelloReverbEffect.swift in Sources */,
+				7CF1AAD52C813502005AF481 /* DelayEffect.swift in Sources */,
+				7CF1AADF2C813502005AF481 /* ResponseReverbEffect.swift in Sources */,
+				7CF1AAB42C811A05005AF481 /* SetEffect.swift in Sources */,
+				7CF1AADA2C813502005AF481 /* LowPassFilterEffect.swift in Sources */,
+				7CF1AABA2C812394005AF481 /* createAudioBufferSamplerChainEffects.swift in Sources */,
+				7CF1AAE62C81362B005AF481 /* ValueAndRange.swift in Sources */,
+				7CF1AAEA2C8223FA005AF481 /* CodableColor.swift in Sources */,
+				7CF1AAB82C812300005AF481 /* midiSequencerBuffersAndSamplersWithNestedEffects.swift in Sources */,
 				7CD1CB802C6F598300887861 /* BufferView.swift in Sources */,
+				7CF1AAD92C813502005AF481 /* HighPassFilterEffect.swift in Sources */,
+				7CF1AAE82C813654005AF481 /* RangeConverter.swift in Sources */,
 				7C8B6A792C7D1B2A00B14E3E /* NoseData.swift in Sources */,
+				7CF1AAE12C813502005AF481 /* TanhDistortionEffect.swift in Sources */,
+				7CF1AAD22C813502005AF481 /* BandPassFilterEffect.swift in Sources */,
 				7C949D792C7A4C7A00CB17BA /* AppError.swift in Sources */,
+				7CF1AAA32C8117C2005AF481 /* Conductor.swift in Sources */,
+				7CF1AAC02C8130AC005AF481 /* AppUtils.swift in Sources */,
+				7CF1AADE2C813502005AF481 /* PhaserEffect.swift in Sources */,
 				7C205A502C5F626500646C10 /* ContentView.swift in Sources */,
+				7CF1AAB02C811A05005AF481 /* Effect.swift in Sources */,
 				7C8B6A7B2C7D1BE300B14E3E /* CameraViewWrapper.swift in Sources */,
 				7C205A4E2C5F626500646C10 /* Environmental_FeedbackApp.swift in Sources */,
+				7CF1AAB52C811A05005AF481 /* Track.swift in Sources */,
+				7CF1AAD62C813502005AF481 /* DistortionEffect.swift in Sources */,
 				7CD1CB702C688E0000887861 /* AudioManager.swift in Sources */,
 				7C949D732C7A4B4700CB17BA /* CameraView.swift in Sources */,
 				7C8B6A742C7B6B3400B14E3E /* DistanceView.swift in Sources */,
+				7CF1AADC2C813502005AF481 /* NoneEffect.swift in Sources */,
+				7CF1AAB22C811A05005AF481 /* MidiFiles.swift in Sources */,
+				7CF1AAD72C813502005AF481 /* DynamicRangeCompressorEffect.swift in Sources */,
+				7CF1AAD82C813502005AF481 /* ExpanderEffect.swift in Sources */,
+				7CF1AABC2C813027005AF481 /* midiNoteNumberFromFileName.swift in Sources */,
 				7CD1CB7E2C6F58A000887861 /* TransportView.swift in Sources */,
+				7CF1AABE2C813066005AF481 /* lengthInBeatsFromFileName.swift in Sources */,
 				7C949D762C7A4BF700CB17BA /* CameraPreview.swift in Sources */,
 				7C8B6A7F2C7D1C2600B14E3E /* FaceLandmarkTrailView.swift in Sources */,
+				7CF1AADD2C813502005AF481 /* PeakingParametricEqualizerFilterEffect.swift in Sources */,
+				7CF1AAB12C811A05005AF481 /* InstrumentsSet.swift in Sources */,
 				7C949D6E2C7A293000CB17BA /* EarTrackingView.swift in Sources */,
 				7C8B6A7D2C7D1C0C00B14E3E /* DistanceViewCollection.swift in Sources */,
+				7CF1AAD32C813502005AF481 /* CompressorEffect.swift in Sources */,
+				7CF1AAB32C811A05005AF481 /* Part.swift in Sources */,
 				7CD1CB782C69016300887861 /* FFTView.swift in Sources */,
+				7CF1AAB62C811A05005AF481 /* UserView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -518,6 +678,14 @@
 				minimumVersion = 5.6.1;
 			};
 		};
+		7CF1AAE22C81353D005AF481 /* XCRemoteSwiftPackageReference "SporthAudioKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AudioKit/SporthAudioKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.5.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -540,6 +708,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7CD1CB862C70971D00887861 /* XCRemoteSwiftPackageReference "SoundpipeAudioKit" */;
 			productName = SoundpipeAudioKit;
+		};
+		7CF1AAE32C81353D005AF481 /* SporthAudioKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7CF1AAE22C81353D005AF481 /* XCRemoteSwiftPackageReference "SporthAudioKit" */;
+			productName = SporthAudioKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
