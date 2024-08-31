@@ -9,6 +9,7 @@ import SwiftUI
 
 struct TransportView: View {
     
+    @EnvironmentObject var setInfoModel: SetInfoModel
     @ObservedObject var audioManager: AudioManager
     @ObservedObject var noseData: NoseData
     @Binding var isEngineRunning: Bool

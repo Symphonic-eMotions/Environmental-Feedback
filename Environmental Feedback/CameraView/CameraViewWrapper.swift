@@ -7,6 +7,7 @@
 import SwiftUI
 
 struct CameraViewWrapper: View {
+    @EnvironmentObject var setInfoModel: SetInfoModel
     @ObservedObject var noseData: NoseData
     @Binding var isCalibrating: Bool
     
