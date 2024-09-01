@@ -69,7 +69,7 @@
           "exsFileName" : "trigger"
         }
       ],
-      "instrumentColor" : "InstrumentColor600",
+      "instrumentColor" : "Red",
       "instrumentName" : "Cruiser C#3",
       "instrumentParts" : [
         {

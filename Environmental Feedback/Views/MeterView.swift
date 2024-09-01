@@ -12,16 +12,34 @@ struct MeterView: View {
     
     var body: some View {
         HStack {
-            MeterColumnView(value: scaleValue(noseData.leftNoseDistance, min: noseData.minLeftNoseDistance, max: noseData.maxLeftNoseDistance), color: .purple)
-            MeterColumnView(value: scaleValue(noseData.rightNoseDistance, min: noseData.minRightNoseDistance, max: noseData.maxRightNoseDistance), color: .orange)
-            MeterColumnView(value: scaleValue(noseData.noseTrailVariation, min: noseData.minNoseTrailVariations, max: noseData.maxNoseTrailVariations), color: .blue)
+            MeterColumnView(
+                value: noseData.scaleValue(
+                    noseData.leftNoseDistance,
+                    foundMin: noseData.minLeftNoseDistance,
+                    foundMax: noseData.maxLeftNoseDistance
+                ), 
+                color: .purple
+            )
+            MeterColumnView(
+                value: noseData.scaleValue(
+                    noseData.rightNoseDistance,
+                    foundMin: noseData.minRightNoseDistance,
+                    foundMax: noseData.maxRightNoseDistance
+                ), 
+                color: .orange
+            )
+            MeterColumnView(
+                value: noseData.scaleValue(
+                    noseData.noseTrailVariation, 
+                    foundMin: noseData.minNoseTrailVariations,
+                    foundMax: noseData.maxNoseTrailVariations
+                ), 
+                color: .blue
+            )
         }
     }
     
-    private func scaleValue(_ value: CGFloat, min: CGFloat, max: CGFloat) -> CGFloat {
-        guard max != min else { return 0.5 } // Prevent division by zero
-        return (value - min) / (max - min)
-    }
+    
 }
 
 struct MeterColumnView: View {

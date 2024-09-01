@@ -34,7 +34,7 @@ struct ContentView: View {
 //                
                 ZStack(alignment: .topLeading) {
                     CameraViewWrapper(noseData: noseData, isCalibrating: $isCalibrating)
-                    .environmentObject(setInfoModel)
+                        .environmentObject(setInfoModel)
                     DistanceViewCollection(noseData: noseData, isCalibrating: $isCalibrating)
                     MeterView(noseData: noseData)
                     FaceLandmarkTrailView(noseData: noseData)

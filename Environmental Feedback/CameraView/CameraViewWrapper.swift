@@ -14,10 +14,29 @@ struct CameraViewWrapper: View {
     var body: some View {
         CameraView(earDistanceHandler: { _ in
             
-            // Stuur waarden naar de audio engine
-            // via forwardEffect naar de conductor
-            // eerst schalen naar 0 tot 1 met de beschibare min en max waarden
-//            setInfoModel.conductor.forwardEffect(value: <#T##Double#>, for: InstrumentsSet.Track.Part.DamperTarget)
+            let scaledLeftValue = noseData.scaleValue(noseData.leftNoseDistance, foundMin: noseData.minLeftNoseDistance, foundMax: noseData.maxLeftNoseDistance)
+            let scaledRightValue = noseData.scaleValue(noseData.rightNoseDistance, foundMin: noseData.minRightNoseDistance, foundMax: noseData.maxRightNoseDistance)
+
+            // Dummy DamperTargets om te testen
+            let damperTargetLeft = InstrumentsSet.Track.Part.DamperTarget(
+                trackId: "T2",
+                nodeType: .effect,
+                nodeName: "lowPassFilter",
+                parameter: "cutoffFrequency",
+                parameterRange: [10, 20_000.0],
+                parameterInversed: false
+            )
+            let damperTargetRight = InstrumentsSet.Track.Part.DamperTarget(
+                trackId: "T2",
+                nodeType: .effect,
+                nodeName: "delay",
+                parameter: "feedback",
+                parameterRange: [0.0, 100.0],
+                parameterInversed: false
+            )
+
+            setInfoModel.conductor.forwardEffect(value: Double(scaledLeftValue), for: damperTargetLeft)
+            setInfoModel.conductor.forwardEffect(value: Double(scaledRightValue), for: damperTargetRight)
             
         }, earPointsHandler: { leftPoint, rightPoint in
             noseData.leftEarPoint = leftPoint
