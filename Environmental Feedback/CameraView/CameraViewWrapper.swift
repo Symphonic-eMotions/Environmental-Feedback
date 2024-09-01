@@ -13,7 +13,12 @@ struct CameraViewWrapper: View {
     
     var body: some View {
         CameraView(earDistanceHandler: { _ in
+            
             // Stuur waarden naar de audio engine
+            // via forwardEffect naar de conductor
+            // eerst schalen naar 0 tot 1 met de beschibare min en max waarden
+//            setInfoModel.conductor.forwardEffect(value: <#T##Double#>, for: InstrumentsSet.Track.Part.DamperTarget)
+            
         }, earPointsHandler: { leftPoint, rightPoint in
             noseData.leftEarPoint = leftPoint
             noseData.rightEarPoint = rightPoint

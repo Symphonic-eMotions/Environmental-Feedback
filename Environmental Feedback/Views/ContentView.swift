@@ -10,13 +10,8 @@ import AudioKit
 import AudioKitUI
 
 struct ContentView: View {
-    @StateObject private var audioManager = AudioManager(
-        micVolume: 0.01,
-        playbackVolume: 1.0
-    )
     @StateObject private var setInfoModel: SetInfoModel
     @StateObject private var noseData = NoseData()
-    @State private var isEngineRunning = false
     @State private var currentPosition: Double = 0.0
     @State private var isCalibrating = true
     
@@ -35,8 +30,8 @@ struct ContentView: View {
     var body: some View {
         VStack(spacing: 0) {
             ScrollView {
-                RecordLooperView(audioManager: audioManager)
-                
+//                RecordLooperView(audioManager: audioManager)
+//                
                 ZStack(alignment: .topLeading) {
                     CameraViewWrapper(noseData: noseData, isCalibrating: $isCalibrating)
                     .environmentObject(setInfoModel)
@@ -46,23 +41,18 @@ struct ContentView: View {
                 }
             }
             TransportView(
-                audioManager: audioManager,
                 noseData: noseData,
-                isEngineRunning: $isEngineRunning,
                 isCalibrating: $isCalibrating
             )
             .environmentObject(setInfoModel)
         }
         .padding(.vertical)
         .onAppear {
-            audioManager.startEngine()
-            audioManager.startLoopTracking { position in
-                currentPosition = position
-            }
+            setInfoModel.conductor.startEngine()
             UIApplication.shared.isIdleTimerDisabled = true
         }
         .onDisappear {
-            audioManager.cleanup()
+            setInfoModel.conductor.cleanup()
         }
     }
 }

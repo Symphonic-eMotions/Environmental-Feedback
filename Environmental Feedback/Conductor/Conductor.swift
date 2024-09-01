@@ -5,11 +5,16 @@
 //  Created by Frans-Jan Wind on 29/08/2024.
 //
 
+import SwiftUI
 import AudioKit
 
+@MainActor
 final class Conductor {
     
     //MARK: Var declarations
+    @Published var isEngineRunning: Bool = false
+    @Published var isPlaying: Bool = false
+    
     //Audiokit AudioEngine. One engine is running at all times
     //Gets pauzed on set change
     internal var audioEngine: AudioEngine
@@ -75,6 +80,22 @@ final class Conductor {
         }
     }
     
+    func startEngine() {
+        do {
+            try audioEngine.start()
+//            fftTap.start()
+        } catch {
+            print("Error starting AudioEngine: \(error)")
+        }
+    }
+    
+    func cleanup() {
+        self.audioEngine.stop()
+//        self.fftTap.stop()
+//        self.stopLoopTracking()
+    }
+    
+    
     //MARK: Chain effects per track
     internal func chainEffects(
         for track: InstrumentsSet.Track,
@@ -88,7 +109,7 @@ final class Conductor {
         }
         return finalNode as Node
     }
-
+    
     //MARK: Chain master track
     private func chainMasterEffects(
         for effects: [InstrumentsSet.Track.Effect],
@@ -110,4 +131,56 @@ final class Conductor {
         }
         return midiTargetChannels
     }
+        
+    public func playEngineAndTracks() {
+        do {
+            
+            isPlaying = true
+            
+            //Fire up the audio engine
+            try audioEngine.start()
+            
+            print("--> Audio engine is running <--")
+            
+            trackSequencers.forEach { track in
+                track.value.play()
+            }
+        } catch {
+            print("Catched ERROR playEngineAndTracks \(error)")
+        }
+    }
+    
+    public func stopTracks() {
+        
+        isPlaying = false
+        
+        trackSequencers.forEach { track in
+            track.value.stop()
+            track.value.rewind()
+            track.value.preroll()
+        }
+        
+    }
+    
+    internal func forwardEffect(
+        value: Double,
+        for damperTarget: InstrumentsSet.Track.Part.DamperTarget) {
+            
+            print("start forwardEffect \(damperTarget.trackId) \(damperTarget.nodeName) \(damperTarget.parameter)")
+            
+            guard let track = set.track(for: damperTarget.trackId) else { return }
+            
+            guard let effectType = InstrumentsSet.Track.Effect.EffectType(rawValue: damperTarget.nodeName) else { return }
+            
+            guard let effect = track.effect(for: effectType) else { return }
+            
+            //inverse value if requested in dampertarget
+            let valueToApply = damperTarget.parameterInversed ? 1 - value : value
+            
+            print("APPLY \(valueToApply) to \(damperTarget.trackId) \(damperTarget.nodeName) \(damperTarget.parameter)")
+
+            effect.apply(value: valueToApply, with: damperTarget)
+        }
+
+    
 }

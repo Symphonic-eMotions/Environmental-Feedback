@@ -68,6 +68,8 @@
 		7CF1AAEA2C8223FA005AF481 /* CodableColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF1AAE92C8223FA005AF481 /* CodableColor.swift */; };
 		7CF1AAED2C82272A005AF481 /* Sets in Resources */ = {isa = PBXBuildFile; fileRef = 7CF1AAEC2C82272A005AF481 /* Sets */; };
 		7CF1AAF02C8230C8005AF481 /* SetInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF1AAEF2C8230C8005AF481 /* SetInfoModel.swift */; };
+		7CF1AAF22C83B3AD005AF481 /* Sounds in Resources */ = {isa = PBXBuildFile; fileRef = 7CF1AAF12C83B3AD005AF481 /* Sounds */; };
+		7CF1AAF42C83B6CC005AF481 /* Samples in Resources */ = {isa = PBXBuildFile; fileRef = 7CF1AAF32C83B6CC005AF481 /* Samples */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -129,6 +131,8 @@
 		7CF1AAE92C8223FA005AF481 /* CodableColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableColor.swift; sourceTree = "<group>"; };
 		7CF1AAEC2C82272A005AF481 /* Sets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Sets; sourceTree = "<group>"; };
 		7CF1AAEF2C8230C8005AF481 /* SetInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetInfoModel.swift; sourceTree = "<group>"; };
+		7CF1AAF12C83B3AD005AF481 /* Sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Sounds; sourceTree = "<group>"; };
+		7CF1AAF32C83B6CC005AF481 /* Samples */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Samples; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,6 +170,8 @@
 		7C205A4C2C5F626500646C10 /* Environmental Feedback */ = {
 			isa = PBXGroup;
 			children = (
+				7CF1AAF32C83B6CC005AF481 /* Samples */,
+				7CF1AAF12C83B3AD005AF481 /* Sounds */,
 				7CF1AAEC2C82272A005AF481 /* Sets */,
 				7C205A602C5F668400646C10 /* AudioProcessing */,
 				7CF1AAA12C81179E005AF481 /* Conductor */,
@@ -265,12 +271,12 @@
 			isa = PBXGroup;
 			children = (
 				7CF1AAA82C811A05005AF481 /* InstrumentsSet.swift */,
+				7CF1AAAC2C811A05005AF481 /* Track.swift */,
+				7CF1AAAA2C811A05005AF481 /* Part.swift */,
 				7CF1AAA62C811A05005AF481 /* DamperTarget.swift */,
 				7CF1AAA72C811A05005AF481 /* Effect.swift */,
 				7CF1AAA92C811A05005AF481 /* MidiFiles.swift */,
-				7CF1AAAA2C811A05005AF481 /* Part.swift */,
 				7CF1AAAB2C811A05005AF481 /* SetEffect.swift */,
-				7CF1AAAC2C811A05005AF481 /* Track.swift */,
 				7CF1AAAD2C811A05005AF481 /* UserView.swift */,
 			);
 			path = InstrumentSet;
@@ -379,8 +385,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7CF1AAF42C83B6CC005AF481 /* Samples in Resources */,
 				7C205A552C5F626700646C10 /* Preview Assets.xcassets in Resources */,
 				7CF1AAED2C82272A005AF481 /* Sets in Resources */,
+				7CF1AAF22C83B3AD005AF481 /* Sounds in Resources */,
 				7C205A522C5F626700646C10 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

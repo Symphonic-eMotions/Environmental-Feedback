@@ -26,7 +26,6 @@ extension InstrumentsSet {
             case instrumentType
             case noteSource
             case chordEntries
-            case startType
             case variationType = "trackType"
             case instrumentName
             case instrumentColor

@@ -10,14 +10,13 @@ import SwiftUI
 struct TransportView: View {
     
     @EnvironmentObject var setInfoModel: SetInfoModel
-    @ObservedObject var audioManager: AudioManager
     @ObservedObject var noseData: NoseData
-    @Binding var isEngineRunning: Bool
     @Binding var isCalibrating: Bool
     
     var body: some View {
         
         HStack(spacing: 20) {
+            //Callibrating
             Button(action: {
                 isCalibrating.toggle()
                 if isCalibrating {
@@ -30,60 +29,67 @@ struct TransportView: View {
                     .overlay(Circle().stroke(Color.black, lineWidth: 2))
             }
             
+            //Track player
             Button(action: {
-                if isEngineRunning {
-                    audioManager.stopEngine()
-                } else {
-                    audioManager.startEngine()
+                
+                if !setInfoModel.conductor.isEngineRunning {
+                    
                 }
-                isEngineRunning.toggle()
+                
+                if setInfoModel.conductor.isPlaying {
+                    setInfoModel.conductor.playEngineAndTracks()
+                }
+                else {
+                    setInfoModel.conductor.stopTracks()
+                }
+                setInfoModel.conductor.isPlaying.toggle()
             }) {
-                Image(systemName: isEngineRunning ? "power.circle.fill" : "power.circle")
+                Image(systemName: setInfoModel.conductor.isPlaying ? "power.circle.fill" : "power.circle")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 50, height: 50)
-                    .foregroundColor(isEngineRunning ? .green : .gray)
+                    .foregroundColor(setInfoModel.conductor.isPlaying ? .green : .gray)
             }
+            
+            //Recorder
+//            Button(action: {
+//                if audioManager.isRecording {
+//                    audioManager.stopRecording()
+//                    // Zet het volume terug naar de oorspronkelijke waarden of laat het zoals het was.
+//                    audioManager.setPlaybackVolume(audioManager.playbackVolume)
+//                } else {
+//                    // Zet het microfoonvolume op 0 tijdens opname en stel het afspeelvolume in zoals gewenst
+//                    audioManager.setMicVolume(0)
+//                    audioManager.setPlaybackVolume(audioManager.playbackVolume)
+//                    audioManager.startRecording {
+//                        audioManager.setPlaybackVolume(audioManager.playbackVolume)
+//                    }
+//                }
+//            }) {
+//                Image(systemName: "circle.fill")
+//                    .resizable()
+//                    .aspectRatio(contentMode: .fit)
+//                    .frame(width: 50, height: 50)
+//                    .foregroundColor(audioManager.isRecording ? .red : (setInfoModel.conductor.isPlaying ? .gray : .black))
+//            }
+//            .disabled(!setInfoModel.conductor.isPlaying)
 
             Button(action: {
-                if audioManager.isRecording {
-                    audioManager.stopRecording()
-                    // Zet het volume terug naar de oorspronkelijke waarden of laat het zoals het was.
-                    audioManager.setPlaybackVolume(audioManager.playbackVolume)
+                if setInfoModel.conductor.isPlaying {
+                    setInfoModel.conductor.stopTracks()
+                    setInfoModel.conductor.isPlaying = false
                 } else {
-                    // Zet het microfoonvolume op 0 tijdens opname en stel het afspeelvolume in zoals gewenst
-                    audioManager.setMicVolume(0)
-                    audioManager.setPlaybackVolume(audioManager.playbackVolume)
-                    audioManager.startRecording {
-                        audioManager.setPlaybackVolume(audioManager.playbackVolume)
-                    }
-                }
-            }) {
-                Image(systemName: "circle.fill")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 50, height: 50)
-                    .foregroundColor(audioManager.isRecording ? .red : (isEngineRunning ? .gray : .black))
-            }
-            .disabled(!isEngineRunning)
-
-            Button(action: {
-                if audioManager.isPlaying {
-                    audioManager.stopPlayback()
-                    audioManager.isPlaying = false
-                    isEngineRunning = false
-                } else {
-                    audioManager.setMicMuted(true)
-                    audioManager.startPlayback()
+//                    audioManager.setMicMuted(true)
+                    setInfoModel.conductor.playEngineAndTracks()
                 }
             }) {
                 Image(systemName: "play.fill")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 50, height: 50)
-                    .foregroundColor(audioManager.isPlaying ? .green : (isEngineRunning ? .gray : .black))
+                    .foregroundColor(setInfoModel.conductor.isPlaying ? .green : (setInfoModel.conductor.isPlaying ? .gray : .black))
             }
-            .disabled(!isEngineRunning)
+            .disabled(!setInfoModel.conductor.isPlaying)
         }
         .padding(.horizontal)
     }
