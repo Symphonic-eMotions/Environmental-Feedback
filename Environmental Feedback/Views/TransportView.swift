@@ -32,23 +32,18 @@ struct TransportView: View {
             //Track player
             Button(action: {
                 
-                if !setInfoModel.conductor.isEngineRunning {
-                    
-                }
-                
-                if setInfoModel.conductor.isPlaying {
-                    setInfoModel.conductor.playEngineAndTracks()
+                if setInfoModel.conductor.isEngineRunning {
+                    setInfoModel.conductor.cleanup()
                 }
                 else {
-                    setInfoModel.conductor.stopTracks()
+                    setInfoModel.conductor.startEngine()
                 }
-                setInfoModel.conductor.isPlaying.toggle()
             }) {
-                Image(systemName: setInfoModel.conductor.isPlaying ? "power.circle.fill" : "power.circle")
+                Image(systemName: setInfoModel.conductor.isEngineRunning ? "power.circle.fill" : "power.circle")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 50, height: 50)
-                    .foregroundColor(setInfoModel.conductor.isPlaying ? .green : .gray)
+                    .foregroundColor(setInfoModel.conductor.isEngineRunning ? .green : .gray)
             }
             
             //Recorder
@@ -72,12 +67,10 @@ struct TransportView: View {
 //                    .frame(width: 50, height: 50)
 //                    .foregroundColor(audioManager.isRecording ? .red : (setInfoModel.conductor.isPlaying ? .gray : .black))
 //            }
-//            .disabled(!setInfoModel.conductor.isPlaying)
 
             Button(action: {
                 if setInfoModel.conductor.isPlaying {
                     setInfoModel.conductor.stopTracks()
-                    setInfoModel.conductor.isPlaying = false
                 } else {
 //                    audioManager.setMicMuted(true)
                     setInfoModel.conductor.playEngineAndTracks()
@@ -87,9 +80,8 @@ struct TransportView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 50, height: 50)
-                    .foregroundColor(setInfoModel.conductor.isPlaying ? .green : (setInfoModel.conductor.isPlaying ? .gray : .black))
+                    .foregroundColor(setInfoModel.conductor.isPlaying ? .green : .gray)
             }
-            .disabled(!setInfoModel.conductor.isPlaying)
         }
         .padding(.horizontal)
     }

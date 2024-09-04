@@ -83,6 +83,8 @@ final class Conductor {
     func startEngine() {
         do {
             try audioEngine.start()
+            isEngineRunning = true
+            print("--> Audio engine is running <--")
 //            fftTap.start()
         } catch {
             print("Error starting AudioEngine: \(error)")
@@ -90,9 +92,26 @@ final class Conductor {
     }
     
     func cleanup() {
-        self.audioEngine.stop()
+        self.audioEngine.pause()
+        isEngineRunning = false
 //        self.fftTap.stop()
 //        self.stopLoopTracking()
+    }
+    
+    public func playEngineAndTracks() {
+        trackSequencers.forEach { track in
+            track.value.play()
+        }
+        isPlaying = true
+    }
+    
+    public func stopTracks() {
+        trackSequencers.forEach { track in
+            track.value.stop()
+            track.value.rewind()
+            track.value.preroll()
+        }
+        isPlaying = false
     }
     
     
@@ -132,41 +151,11 @@ final class Conductor {
         return midiTargetChannels
     }
         
-    public func playEngineAndTracks() {
-        do {
-            
-            isPlaying = true
-            
-            //Fire up the audio engine
-            try audioEngine.start()
-            
-            print("--> Audio engine is running <--")
-            
-            trackSequencers.forEach { track in
-                track.value.play()
-            }
-        } catch {
-            print("Catched ERROR playEngineAndTracks \(error)")
-        }
-    }
-    
-    public func stopTracks() {
-        
-        isPlaying = false
-        
-        trackSequencers.forEach { track in
-            track.value.stop()
-            track.value.rewind()
-            track.value.preroll()
-        }
-        
-    }
-    
     internal func forwardEffect(
         value: Double,
         for damperTarget: InstrumentsSet.Track.Part.DamperTarget) {
             
-            print("start forwardEffect \(damperTarget.trackId) \(damperTarget.nodeName) \(damperTarget.parameter)")
+//            print("start forwardEffect \(damperTarget.trackId) \(damperTarget.nodeName) \(damperTarget.parameter)")
             
             guard let track = set.track(for: damperTarget.trackId) else { return }
             
@@ -177,7 +166,7 @@ final class Conductor {
             //inverse value if requested in dampertarget
             let valueToApply = damperTarget.parameterInversed ? 1 - value : value
             
-            print("APPLY \(valueToApply) to \(damperTarget.trackId) \(damperTarget.nodeName) \(damperTarget.parameter)")
+//            print("APPLY \(valueToApply) to \(damperTarget.trackId) \(damperTarget.nodeName) \(damperTarget.parameter)")
 
             effect.apply(value: valueToApply, with: damperTarget)
         }

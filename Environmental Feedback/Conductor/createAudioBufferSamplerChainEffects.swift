@@ -106,12 +106,16 @@ extension Conductor {
         let sampler = MIDISampler(name: track.instrumentName)
         sampler.amplitude = track.volume
         
-        //No velocity
+//        //No velocity
         sequencer.setGlobalMIDIOutput(sampler.midiIn)
         
         //Connect all effects
         let chainEffects: Node = chainEffects(for: track, startingNode: sampler)
         
+//        let oscillator = Oscillator()
+//        mixer.addInput(oscillator)
+//        oscillator.start()
+            
         mixer.addInput(chainEffects)
         
         //This needs to happen as last
