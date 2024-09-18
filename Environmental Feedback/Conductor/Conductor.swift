@@ -73,6 +73,7 @@ final class Conductor {
             
             //Load sequencers
             //Within this function the EXS is also loaded
+            guard let sequencer = midiSequencerBuffersAndSamplersWithNestedEffects(
                 for: track,
                 length: "loopSequenceFromMIDIfile",
                 currentSetLevel: currentSetLevel,
