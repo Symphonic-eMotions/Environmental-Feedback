@@ -29,7 +29,7 @@ struct TransportView: View {
                     .overlay(Circle().stroke(Color.black, lineWidth: 2))
             }
             
-            //Track player
+            //Engine Switch
             Button(action: {
                 
                 if setInfoModel.conductor.isEngineRunning {

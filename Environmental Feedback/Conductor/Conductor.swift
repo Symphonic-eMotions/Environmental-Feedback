@@ -7,6 +7,7 @@
 
 import SwiftUI
 import AudioKit
+import SoundpipeAudioKit
 
 @MainActor
 final class Conductor {
@@ -55,6 +56,8 @@ final class Conductor {
     
     //MARK: Load Master Track
     private func loadMaster(mixer: Node) {
+//        mixerMaster.addInput(mixer)  // Directly connect without effects
+
         mixerMaster.addInput(chainMasterEffects(for: set.masterTrackEffects, startingNode: mixer))
     }
     
@@ -70,22 +73,35 @@ final class Conductor {
             
             //Load sequencers
             //Within this function the EXS is also loaded
-            trackSequencers[track.id] = midiSequencerBuffersAndSamplersWithNestedEffects(
                 for: track,
                 length: "loopSequenceFromMIDIfile",
                 currentSetLevel: currentSetLevel,
                 midiChannels: &midiChannels,
                 samplePath: set.filesPath
-            )
+            ) else {
+                print("Error loading sequencer for track: \(track.id)")
+                return
+            }
+            
+            trackSequencers[track.id] = sequencer
         }
     }
     
     func startEngine() {
         do {
+            let osc = Oscillator()
+            mixerMaster.addInput(osc)
+            
             try audioEngine.start()
+            
+            // Kies een willekeurige frequentie tussen 110 en 220 Hz, voor variatie in de print
+            osc.frequency = AUValue(Double.random(in: 110...220))
+            osc.amplitude = 0.0 //Trigger Audio Chain Hack
+            osc.play()
+            
             isEngineRunning = true
-            print("--> Audio engine is running <--")
-//            fftTap.start()
+            print("--> Audio engine and osc \(osc.frequency) Hz are running <--")
+            
         } catch {
             print("Error starting AudioEngine: \(error)")
         }
@@ -94,13 +110,14 @@ final class Conductor {
     func cleanup() {
         self.audioEngine.pause()
         isEngineRunning = false
-//        self.fftTap.stop()
-//        self.stopLoopTracking()
+        //        self.fftTap.stop()
+        //        self.stopLoopTracking()
     }
     
     public func playEngineAndTracks() {
         trackSequencers.forEach { track in
             track.value.play()
+            print("Start track \(track.key)")
         }
         isPlaying = true
     }
@@ -110,6 +127,7 @@ final class Conductor {
             track.value.stop()
             track.value.rewind()
             track.value.preroll()
+            print("Stop track \(track.key)")
         }
         isPlaying = false
     }
@@ -150,26 +168,25 @@ final class Conductor {
         }
         return midiTargetChannels
     }
-        
+    
     internal func forwardEffect(
         value: Double,
-        for damperTarget: InstrumentsSet.Track.Part.DamperTarget) {
-            
-//            print("start forwardEffect \(damperTarget.trackId) \(damperTarget.nodeName) \(damperTarget.parameter)")
-            
-            guard let track = set.track(for: damperTarget.trackId) else { return }
-            
-            guard let effectType = InstrumentsSet.Track.Effect.EffectType(rawValue: damperTarget.nodeName) else { return }
-            
-            guard let effect = track.effect(for: effectType) else { return }
-            
-            //inverse value if requested in dampertarget
-            let valueToApply = damperTarget.parameterInversed ? 1 - value : value
-            
-//            print("APPLY \(valueToApply) to \(damperTarget.trackId) \(damperTarget.nodeName) \(damperTarget.parameter)")
-
-            effect.apply(value: valueToApply, with: damperTarget)
-        }
-
-    
+        for damperTarget: InstrumentsSet.Track.Part.DamperTarget) 
+    {
+        
+        //            print("start forwardEffect \(damperTarget.trackId) \(damperTarget.nodeName) \(damperTarget.parameter)")
+        
+        guard let track = set.track(for: damperTarget.trackId) else { return }
+        
+        guard let effectType = InstrumentsSet.Track.Effect.EffectType(rawValue: damperTarget.nodeName) else { return }
+        
+        guard let effect = track.effect(for: effectType) else { return }
+        
+        //inverse value if requested in dampertarget
+        let valueToApply = damperTarget.parameterInversed ? 1 - value : value
+        
+        //            print("APPLY \(valueToApply) to \(damperTarget.trackId) \(damperTarget.nodeName) \(damperTarget.parameter)")
+        
+        effect.apply(value: valueToApply, with: damperTarget)
+    }
 }
