@@ -43,6 +43,11 @@ struct ContentView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(Color.gray.opacity(0.1))
                 .padding()
+                
+                TuringView()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color.gray.opacity(0.1))
+                .padding()
             }
         }
         .padding(.vertical)

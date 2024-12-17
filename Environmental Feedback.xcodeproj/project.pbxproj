@@ -21,6 +21,13 @@
 		7CD1CB802C6F598300887861 /* BufferView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD1CB7F2C6F598300887861 /* BufferView.swift */; };
 		7CD1CB822C6FA04C00887861 /* MultiSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD1CB812C6FA04C00887861 /* MultiSliderView.swift */; };
 		7CD1CB882C70971D00887861 /* SoundpipeAudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7CD1CB872C70971D00887861 /* SoundpipeAudioKit */; };
+		7CE1559E2D11EE1200B39E33 /* TuringView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE1559D2D11EE1200B39E33 /* TuringView.swift */; };
+		7CE155A12D11EE9500B39E33 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE155A02D11EE9500B39E33 /* ViewModel.swift */; };
+		7CE155A32D11EECD00B39E33 /* TuringRhythmGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE155A22D11EECD00B39E33 /* TuringRhythmGenerator.swift */; };
+		7CE155A52D11F26800B39E33 /* MIDIFileDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE155A42D11F26800B39E33 /* MIDIFileDocument.swift */; };
+		7CE155A72D11F6FA00B39E33 /* Chord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE155A62D11F6FA00B39E33 /* Chord.swift */; };
+		7CE155A92D11F80500B39E33 /* NoteMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE155A82D11F80500B39E33 /* NoteMapper.swift */; };
+		7CE155AB2D11F83E00B39E33 /* ChordParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE155AA2D11F83E00B39E33 /* ChordParser.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +43,13 @@
 		7CD1CB7F2C6F598300887861 /* BufferView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferView.swift; sourceTree = "<group>"; };
 		7CD1CB812C6FA04C00887861 /* MultiSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiSliderView.swift; sourceTree = "<group>"; };
 		7CD1CB892C71FC2900887861 /* Environmental-Feedback-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Environmental-Feedback-Info.plist"; sourceTree = SOURCE_ROOT; };
+		7CE1559D2D11EE1200B39E33 /* TuringView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TuringView.swift; sourceTree = "<group>"; };
+		7CE155A02D11EE9500B39E33 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		7CE155A22D11EECD00B39E33 /* TuringRhythmGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TuringRhythmGenerator.swift; sourceTree = "<group>"; };
+		7CE155A42D11F26800B39E33 /* MIDIFileDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MIDIFileDocument.swift; sourceTree = "<group>"; };
+		7CE155A62D11F6FA00B39E33 /* Chord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chord.swift; sourceTree = "<group>"; };
+		7CE155A82D11F80500B39E33 /* NoteMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteMapper.swift; sourceTree = "<group>"; };
+		7CE155AA2D11F83E00B39E33 /* ChordParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChordParser.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +88,7 @@
 			children = (
 				7CD1CB892C71FC2900887861 /* Environmental-Feedback-Info.plist */,
 				7C205A4D2C5F626500646C10 /* Environmental_FeedbackApp.swift */,
+				7CE1559F2D11EE8100B39E33 /* Models */,
 				7CD1CB712C6896B500887861 /* Views */,
 				7C205A602C5F668400646C10 /* AudioProcessing */,
 				7C205A512C5F626700646C10 /* Assets.xcassets */,
@@ -107,8 +122,22 @@
 				7CD1CB7D2C6F58A000887861 /* TransportView.swift */,
 				7CD1CB7F2C6F598300887861 /* BufferView.swift */,
 				7CD1CB812C6FA04C00887861 /* MultiSliderView.swift */,
+				7CE1559D2D11EE1200B39E33 /* TuringView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		7CE1559F2D11EE8100B39E33 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				7CE155A02D11EE9500B39E33 /* ViewModel.swift */,
+				7CE155A22D11EECD00B39E33 /* TuringRhythmGenerator.swift */,
+				7CE155A42D11F26800B39E33 /* MIDIFileDocument.swift */,
+				7CE155A62D11F6FA00B39E33 /* Chord.swift */,
+				7CE155A82D11F80500B39E33 /* NoteMapper.swift */,
+				7CE155AA2D11F83E00B39E33 /* ChordParser.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -193,14 +222,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7CE155A12D11EE9500B39E33 /* ViewModel.swift in Sources */,
+				7CE1559E2D11EE1200B39E33 /* TuringView.swift in Sources */,
 				7CD1CB7C2C6F4FF100887861 /* RecordLooperView.swift in Sources */,
 				7CD1CB822C6FA04C00887861 /* MultiSliderView.swift in Sources */,
 				7CD1CB802C6F598300887861 /* BufferView.swift in Sources */,
+				7CE155A32D11EECD00B39E33 /* TuringRhythmGenerator.swift in Sources */,
 				7C205A502C5F626500646C10 /* ContentView.swift in Sources */,
 				7C205A4E2C5F626500646C10 /* Environmental_FeedbackApp.swift in Sources */,
+				7CE155A92D11F80500B39E33 /* NoteMapper.swift in Sources */,
 				7CD1CB702C688E0000887861 /* AudioManager.swift in Sources */,
 				7CD1CB7E2C6F58A000887861 /* TransportView.swift in Sources */,
 				7CD1CB782C69016300887861 /* FFTView.swift in Sources */,
+				7CE155A52D11F26800B39E33 /* MIDIFileDocument.swift in Sources */,
+				7CE155AB2D11F83E00B39E33 /* ChordParser.swift in Sources */,
+				7CE155A72D11F6FA00B39E33 /* Chord.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -346,7 +382,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -380,7 +416,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
