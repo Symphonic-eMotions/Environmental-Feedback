@@ -33,7 +33,7 @@ struct ContentView: View {
                 
                 RecordLooperView(audioManager: audioManager)
                 
-                BufferView(audioManager: audioManager)
+//                BufferView(audioManager: audioManager)
                 
                 MultiSliderView(
                     audioManager: audioManager,
