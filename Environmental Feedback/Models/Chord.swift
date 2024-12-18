@@ -13,3 +13,4 @@ struct Chord: Decodable {
 }
 
 typealias ChordProgression = [Chord]
+typealias ChordProgressions = [ChordProgression]
