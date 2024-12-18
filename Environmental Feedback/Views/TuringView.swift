@@ -2,7 +2,6 @@ import SwiftUI
 
 struct TuringView: View {
     @StateObject var viewModel = ViewModel()
-    @State private var showShareSheet = false
     
     var body: some View {
         VStack(spacing: 20) {
@@ -42,9 +41,30 @@ struct TuringView: View {
                     viewModel.lockPatternAndCreateMIDI()
                 }
                 .padding()
+                
+                Button("Lock & Load") {
+                    viewModel.lockPatternAndLoadIntoSequencer()
+                }
+                .padding()
             }
-            
-            // Nu delen we midiDocument in plaats van de URL direct.
+
+            // Als er een sequencer geladen is, toon dan Play/Stop knoppen
+            if viewModel.sequencerLoaded {
+                HStack {
+                    if viewModel.sequencerManager.isPlaying {
+                        Button("Stop") {
+                            viewModel.stopSequencer()
+                        }
+                    } else {
+                        Button("Play") {
+                            viewModel.playSequencer()
+                        }
+                    }
+                }
+                .padding()
+            }
+
+            // Download MIDI knop blijft staan als er een midiDocument is
             if let midiDoc = viewModel.midiDocument {
                 ShareLink(item: midiDoc, preview: SharePreview("Pattern.mid")) {
                     Text("Download MIDI")

@@ -1,6 +1,5 @@
 import Foundation
 import AVFoundation
-import CoreMIDI
 import MusicKit
 
 class ViewModel: ObservableObject {
@@ -8,7 +7,10 @@ class ViewModel: ObservableObject {
     @Published var generator = TuringRhythmGenerator()
     @Published var midiFileURL: URL? = nil
     @Published var midiDocument: MIDIFileDocument? = nil
-
+    
+    @Published var sequencerManager = SequencerManager()
+    @Published var sequencerLoaded = false
+    
     init() {
         loadRandomChordProgression()
     }
@@ -26,7 +28,6 @@ class ViewModel: ObservableObject {
             let data = try Data(contentsOf: jsonURL)
             let allProgressions = try JSONDecoder().decode(ChordProgressions.self, from: data)
             
-            // Kies een willekeurige index
             if let randomProgression = allProgressions.randomElement() {
                 self.chords = randomProgression
                 print("Loaded random chord progression")
@@ -38,23 +39,50 @@ class ViewModel: ObservableObject {
         }
     }
     
+    func regeneratePattern() {
+        generator.unlockPattern()
+        generator.resetPattern()
+        for _ in 0..<16 {
+            generator.step()
+        }
+    }
+
     func generateNextStep() {
         generator.step()
     }
     
     func lockPatternAndCreateMIDI() {
-        
         generator.lockPattern()
         
+        guard let data = createMIDIData() else { return }
+        
+        // Schrijf MIDI naar file
+        if let midiURL = saveMIDIToFile(data) {
+            self.midiFileURL = midiURL
+            self.midiDocument = MIDIFileDocument(midiData: data)
+        }
+    }
+    
+    func lockPatternAndLoadIntoSequencer() {
+        generator.lockPattern()
+        
+        guard let data = createMIDIData() else { return }
+        
+        // Laad in sequencer
+        sequencerManager.loadMIDIData(data)
+        sequencerLoaded = true
+    }
+    
+    private func createMIDIData() -> Data? {
         var musicSequence: MusicSequence?
         NewMusicSequence(&musicSequence)
-        guard let sequence = musicSequence else { return }
+        guard let sequence = musicSequence else { return nil }
         
         var track: MusicTrack?
         MusicSequenceNewTrack(sequence, &track)
-
-        var currentBeat: MusicTimeStamp = 0.0
+        guard let mainTrack = track else { return nil }
         
+        var currentBeat: MusicTimeStamp = 0.0
         for chord in chords {
             let stepsPerChord = 16
             let stepDuration = Double(chord.duration) / Double(stepsPerChord)
@@ -69,10 +97,6 @@ class ViewModel: ObservableObject {
                                                    velocity: 64,
                                                    releaseVelocity: 0,
                                                    duration: Float32(stepDuration))
-                        guard let mainTrack = track else {
-                            print("Could not create music track")
-                            return
-                        }
                         MusicTrackNewMIDINoteEvent(mainTrack, startTime, &note)
                     }
                 }
@@ -80,6 +104,14 @@ class ViewModel: ObservableObject {
             currentBeat += Double(chord.duration)
         }
         
+        // Exporteer naar Data
+        let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent("temp.mid")
+        MusicSequenceFileCreate(sequence, tempURL as CFURL, .midiType, .eraseFile, 480)
+        
+        return try? Data(contentsOf: tempURL)
+    }
+    
+    private func saveMIDIToFile(_ data: Data) -> URL? {
         let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
 
         let formatter = DateFormatter()
@@ -89,29 +121,24 @@ class ViewModel: ObservableObject {
         let fileName = "pattern_\(dateString).mid"
         let midiURL = documentsURL.appendingPathComponent(fileName)
 
-        
         if FileManager.default.fileExists(atPath: midiURL.path) {
             try? FileManager.default.removeItem(at: midiURL)
         }
         
-        MusicSequenceFileCreate(sequence, midiURL as CFURL, .midiType, .eraseFile, 480)
-        
-        self.midiFileURL = midiURL
-        
-        if let data = try? Data(contentsOf: midiURL) {
-            self.midiDocument = MIDIFileDocument(midiData: data)
+        do {
+            try data.write(to: midiURL)
+            return midiURL
+        } catch {
+            print("Error writing MIDI file: \(error)")
+            return nil
         }
     }
     
-    func regeneratePattern() {
-        // Zorg dat we niet locked zijn
-        generator.unlockPattern()
-        // Reset pattern zodat we met een schone lei beginnen
-        generator.resetPattern()
-        // Genereer meteen een paar stappen zodat het effect direct zichtbaar is
-        // Hoeveel stappen je zet is arbitrair, hieronder zetten we bijvoorbeeld 16 stappen:
-        for _ in 0..<16 {
-            generator.step()
-        }
+    func playSequencer() {
+        sequencerManager.play()
+    }
+    
+    func stopSequencer() {
+        sequencerManager.stop()
     }
 }
