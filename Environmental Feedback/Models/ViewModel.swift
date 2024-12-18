@@ -103,7 +103,15 @@ class ViewModel: ObservableObject {
         }
     }
     
-    func unlockPattern() {
+    func regeneratePattern() {
+        // Zorg dat we niet locked zijn
         generator.unlockPattern()
+        // Reset pattern zodat we met een schone lei beginnen
+        generator.resetPattern()
+        // Genereer meteen een paar stappen zodat het effect direct zichtbaar is
+        // Hoeveel stappen je zet is arbitrair, hieronder zetten we bijvoorbeeld 16 stappen:
+        for _ in 0..<16 {
+            generator.step()
+        }
     }
 }

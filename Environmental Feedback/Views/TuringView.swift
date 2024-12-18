@@ -20,9 +20,15 @@ struct TuringView: View {
             VStack {
                 Text("Density: \(viewModel.generator.density, specifier: "%.2f")")
                 Slider(value: $viewModel.generator.density, in: 0...1)
-                
+                    .onChange(of: viewModel.generator.density) {
+                        viewModel.regeneratePattern()
+                    }
+
                 Text("Feedback: \(viewModel.generator.feedback, specifier: "%.2f")")
                 Slider(value: $viewModel.generator.feedback, in: 0...1)
+                    .onChange(of: viewModel.generator.feedback) {
+                        viewModel.regeneratePattern()
+                    }
             }
             .padding()
             
@@ -34,11 +40,6 @@ struct TuringView: View {
                 
                 Button("Lock & Export MIDI") {
                     viewModel.lockPatternAndCreateMIDI()
-                }
-                .padding()
-                
-                Button("Unlock Pattern") {
-                    viewModel.unlockPattern()
                 }
                 .padding()
             }
